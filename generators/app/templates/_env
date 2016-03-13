@@ -1,0 +1,13 @@
+# NODE_ENV
+# Could be either `development` or `production`
+NODE_ENV=development
+
+# Port of the Server
+SERVER_PORT=<%= serverPort %>
+
+# Port for running the tests
+TEST_PORT=9090
+
+# URL Prefix for the endpoints
+# eg. http://localhost:8081/api/foo
+API_PREFIX=<%= apiPrefix %>

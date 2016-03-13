@@ -2,6 +2,7 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
+var superb = require('superb');
 
 module.exports = yeoman.generators.Base.extend({
   prompting: function () {
@@ -9,15 +10,47 @@ module.exports = yeoman.generators.Base.extend({
 
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the grand ' + chalk.red('generator-http-fake-backend') + ' generator!'
+      'Welcome to the ' + superb() + ' ' + chalk.red('http-fake-backend') + ' generator!'
     ));
 
-    var prompts = [{
-      type: 'confirm',
-      name: 'someOption',
-      message: 'Would you like to enable this option?',
-      default: true
-    }];
+    // # Port of the Server
+    // SERVER_PORT=8081
+
+    // # Port for running the tests
+    // TEST_PORT=9090
+
+    // # URL Prefix for the endpoints
+    // # eg. http://localhost:8081/api/foo
+    // API_PREFIX=/api
+    var prompts = [
+      {
+        type: 'input',
+        name: 'serverPort',
+        message: 'On which port should the server run?',
+        default: '8081',
+        store: true
+      },
+      {
+        type: 'input',
+        name: 'apiPrefix',
+        message: 'What should be the url prefix of the endpoints?',
+        default: '/api',
+        store: true,
+        validate: function (value) {
+          var check = value.match(/^\/|\/$/g);
+          var returnValue;
+
+          if (check === null) {
+            returnValue = chalk.red('API prefix has to begin with a `/`.');
+          } else if (check[1] === '/') {
+            returnValue = chalk.red('please enter API prefix without trailing  `/`.');
+          } else {
+            returnValue = true;
+          }
+          return returnValue;
+        }
+      }
+    ];
 
     this.prompt(prompts, function (props) {
       this.props = props;
@@ -27,11 +60,88 @@ module.exports = yeoman.generators.Base.extend({
     }.bind(this));
   },
 
-  writing: function () {
-    this.fs.copy(
-      this.templatePath('dummyfile.txt'),
-      this.destinationPath('dummyfile.txt')
-    );
+  writing: {
+
+    dotFiles: function () {
+      this.fs.copy(
+        this.templatePath('editorconfig'),
+        this.destinationPath('.editorconfig')
+      );
+      this.fs.copyTpl(
+        this.templatePath('_env'),
+        this.destinationPath('.env'), {
+          serverPort: this.props.serverPort,
+          apiPrefix: this.props.apiPrefix
+        }
+      );
+      this.fs.copy(
+        this.templatePath('eslintrc'),
+        this.destinationPath('.eslintrc')
+      );
+      this.fs.copy(
+        this.templatePath('gitattributes'),
+        this.destinationPath('.gitattributes')
+      );
+      this.fs.copy(
+        this.templatePath('gitignore'),
+        this.destinationPath('.gitignore')
+      );
+    },
+
+    metaFiles: function () {
+      this.fs.copy(
+        this.templatePath('LICENSE'),
+        this.destinationPath('LICENSE')
+      );
+      this.fs.copy(
+        this.templatePath('nodemon.json'),
+        this.destinationPath('nodemon.json')
+      );
+      this.fs.copy(
+        this.templatePath('package.json'),
+        this.destinationPath('package.json')
+      );
+      this.fs.copy(
+        this.templatePath('README.md'),
+        this.destinationPath('README.md')
+      );
+    },
+
+    rootJsFiles: function () {
+      this.fs.copy(
+        this.templatePath('config.js'),
+        this.destinationPath('config.js')
+      );
+      this.fs.copy(
+        this.templatePath('index.js'),
+        this.destinationPath('index.js')
+      );
+
+      this.fs.copy(
+        this.templatePath('manifest.js'),
+        this.destinationPath('manifest.js')
+      );
+
+      this.fs.copy(
+        this.templatePath('server.js'),
+        this.destinationPath('server.js')
+      );
+    },
+
+    serverFiles: function () {
+      this.directory(
+        this.templatePath('server'),
+        this.destinationPath('server')
+      );
+    },
+
+    testFiles: function () {
+      this.directory(
+        this.templatePath('test'),
+        this.destinationPath('test')
+      );
+    }
+
   },
 
   install: function () {
