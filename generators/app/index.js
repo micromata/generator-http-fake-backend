@@ -13,15 +13,6 @@ module.exports = yeoman.generators.Base.extend({
       'Welcome to the ' + superb() + ' ' + chalk.red('http-fake-backend') + ' generator!'
     ));
 
-    // # Port of the Server
-    // SERVER_PORT=8081
-
-    // # Port for running the tests
-    // TEST_PORT=9090
-
-    // # URL Prefix for the endpoints
-    // # eg. http://localhost:8081/api/foo
-    // API_PREFIX=/api
     var prompts = [
       {
         type: 'input',
@@ -29,8 +20,7 @@ module.exports = yeoman.generators.Base.extend({
         message: 'On which port should the server run?',
         default: '8081',
         store: true
-      },
-      {
+      }, {
         type: 'input',
         name: 'apiPrefix',
         message: 'What should be the url prefix of the endpoints?',

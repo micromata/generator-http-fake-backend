@@ -3,7 +3,7 @@ var path = require('path');
 var assert = require('yeoman-assert');
 var helpers = require('yeoman-generator').test;
 
-describe('generator-http-fake-backend:app', function () {
+describe('generator-http-fake-backend → server', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../generators/app'))
       .withPrompts({
