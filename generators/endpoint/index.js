@@ -29,17 +29,27 @@ module.exports = yeoman.generators.Base.extend({
           return !that.endpoint.urls.length;
         },
         validate: function (value) {
-          var check = chalk.red('Please enter a name. This will be a part of the url.');
-          if (value !== '') {
-            check = true;
+          var returnvalue = chalk.red('Please enter a valid name. This will be a part of the url.');
+          var validChars = value.match(/[^a-zA-Z0-9(),!.~$&'\-_*+;=:@]+/g);
+          if (!validChars && value) {
+            returnvalue = true;
           }
-          return check;
+          return returnvalue;
         }
       },
       {
         type: 'input',
         name: 'params',
-        message: 'Please enter URL params (optional)'
+        message: 'Please enter URL path params (optional)',
+        validate: function (value) {
+          var returnvalue = chalk.red('Please enter valid path parameters with a leading `/`. See http://hapijs.com/api#path-parameters');
+          var validChars = value.match(/[^a-zA-Z0-9()\/,!.~$&'\-_*+;=:@]+/g);
+          var leadingSlash = value.match(/^\//);
+          if ((!validChars && leadingSlash) || value === '') {
+            returnvalue = true;
+          }
+          return returnvalue;
+        }
       }, {
         type: 'list',
         name: 'method',
@@ -62,17 +72,38 @@ module.exports = yeoman.generators.Base.extend({
         type: 'input',
         name: 'response',
         message: 'Please enter the name of your JSON file',
-        default: '/json-templates/foo.json',
+        default: 'foo.json',
         when: function (answers) {
           return answers.responseType === 'json';
+        },
+        validate: function (value) {
+          var returnvalue = chalk.red('Please enter valid filename (*.json)');
+          var fileExt = value.match(/\w\.json$/);
+          var validChars = value.match(/[^a-zA-Z0-9(),!.~$&'\-_*+;=:@]+/g);
+          if (fileExt && !validChars) {
+            returnvalue = true;
+          }
+          return returnvalue;
         }
       }, {
         type: 'input',
         name: 'response',
-        message: 'Please enter a JavaScript object',
+        message: 'Please enter a JavaScript object literal or array',
         default: '{ status: "ok" }',
         when: function (answers) {
           return answers.responseType === 'object';
+        },
+        filter: function (value) {
+          return value.replace(/'/g, '"');
+        },
+        validate: function (value) {
+          var returnvalue = chalk.red('Your input doesn’t look like an object or array at all.');
+          var isArray = value.match(/^\[/) && value.match(/]$/);
+          var isObject = value.match(/^{/) && value.match(/\}$/);
+          if (isArray || isObject) {
+            returnvalue = true;
+          }
+          return returnvalue;
         }
       }, {
         type: 'confirm',
