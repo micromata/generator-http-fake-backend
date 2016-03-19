@@ -41,3 +41,26 @@ describe('generator-http-fake-backend → endpoint', function () {
   });
 
 });
+
+describe('generator-http-fake-backend → endpoint → JSON file', function () {
+  before(function (done) {
+    helpers.run(path.join(__dirname, '../generators/endpoint'))
+      .withOptions({someOption: true})
+      .withPrompts({
+        endpointName: 'endpoint',
+        params: '/bar',
+        method: 'GET',
+        responseType: 'json',
+        response: 'foo.json',
+        anotherUrl: false
+      })
+      .on('end', done);
+  });
+
+  it('should create foo.json', function () {
+    assert.file([
+      'json-templates/foo.json'
+    ]);
+  });
+
+});

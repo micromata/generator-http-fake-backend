@@ -118,6 +118,13 @@ module.exports = yeoman.generators.Base.extend({
       );
     },
 
+    jsonTemplates: function () {
+      this.directory(
+        this.templatePath('json-templates'),
+        this.destinationPath('json-templates')
+      );
+    },
+
     serverFiles: function () {
       this.directory(
         this.templatePath('server'),

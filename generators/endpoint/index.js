@@ -127,6 +127,7 @@ module.exports = yeoman.generators.Base.extend({
           params: that.props.params,
           requests: [{
             method: that.props.method,
+            responseType: that.props.responseType,
             response: that.props.response
           }]
         });
@@ -142,11 +143,22 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   writing: function () {
+    var that = this;
+
     this.fs.copyTpl(
       this.templatePath('_endpoint.js'),
       this.destinationPath('server/api/' + this.endpoint.name + '.js'), {
         endpoint: this.endpoint
       }
     );
+
+    this.endpoint.urls.forEach(function (url) {
+      if (url.requests[0].responseType === 'json') {
+        that.fs.copy(
+          that.templatePath('response.json'),
+          that.destinationPath('json-templates/' + url.requests[0].response)
+        );
+      }
+    });
   }
 });

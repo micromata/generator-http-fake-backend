@@ -52,6 +52,12 @@ describe('generator-http-fake-backend → server', function () {
     ]);
   });
 
+  it('should create json-templates directory', function () {
+    assert.file([
+      'json-templates/.gitkeep'
+    ]);
+  });
+
   it('should create server files', function () {
     assert.file([
       'server/api/setup/setup.js',
