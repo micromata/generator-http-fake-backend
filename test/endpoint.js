@@ -2,6 +2,8 @@
 var path = require('path');
 var assert = require('yeoman-assert');
 var helpers = require('yeoman-generator').test;
+var helper = require('../generators/endpoint/promptingHelpers');
+var chalk = require('chalk');
 
 describe('generator-http-fake-backend → endpoint', function () {
   before(function (done) {
@@ -64,3 +66,82 @@ describe('generator-http-fake-backend → endpoint → JSON file', function () {
   });
 
 });
+
+describe('generator-http-fake-backend → endpoint → prompting helpers', function () {
+
+  describe('→ filterResponseType()', function () {
+    it('should return correct outputs', function () {
+      assert.equal(helper.filterResponseType('The content of a JSON file'), 'json');
+      assert.equal(helper.filterResponseType('A JavaScript object literal'), 'object');
+    });
+  });
+
+  describe('→ filterJsObject()', function () {
+    it('should return single quotes as double qoutes', function () {
+      assert.equal(helper.filterJsObject("''"), '""');
+    });
+  });
+
+  describe('→ validateJsObject()', function () {
+    it('should validate a string representation of an object', function () {
+      assert.equal(helper.validateJsObject('{}'), true);
+    });
+    it('should validate a string representation of an array', function () {
+      assert.equal(helper.validateJsObject('[]'), true);
+    });
+    it('should fail on a string', function () {
+      assert.equal(helper.validateJsObject('foo'), chalk.red('Your input doesn’t look like an object or array at all.'));
+    });
+  });
+
+  describe('→ validateJson()', function () {
+    var failMsg = chalk.red('Please enter valid filename (*.json)');
+
+    it('should validate `foo.json`', function () {
+      assert.equal(helper.validateJson('foo.json'), true);
+    });
+    it('should fail `foo.txt`', function () {
+      assert.equal(helper.validateJson('foo.txt'), failMsg);
+    });
+    it('should fail when using forbidden chars', function () {
+      assert.equal(helper.validateJson('^foo.json'), failMsg);
+    });
+  });
+
+  describe('→ validateEndpoint()', function () {
+    var failMsg = chalk.red('Please enter a valid name. This will be a part of the url.');
+
+    it('should validate `foo`', function () {
+      assert.equal(helper.validateEndpoint('foo'), true);
+    });
+    it('should fail when using a leading slash', function () {
+      assert.equal(helper.validateEndpoint('/foo'), failMsg);
+    });
+    it('should fail when using a trailing slash', function () {
+      assert.equal(helper.validateEndpoint('foo/'), failMsg);
+    });
+    it('should fail when using forbidden chars', function () {
+      assert.equal(helper.validateEndpoint('f^oo'), failMsg);
+    });
+  });
+
+  describe('→ validateParams()', function () {
+    var failMsg = chalk.red('Please enter valid path parameters with a leading `/`. See http://hapijs.com/api#path-parameters');
+
+    it('should validate an empty string', function () {
+      assert.equal(helper.validateParams(''), true);
+    });
+    it('should validate `/foo/{id}`', function () {
+      assert.equal(helper.validateParams('/foo/{id}'), true);
+    });
+    it('should fail when missing a leading slash', function () {
+      assert.equal(helper.validateParams('foo'), failMsg);
+    });
+    it('should fail when using forbidden chars', function () {
+      assert.equal(helper.validateParams('/foo^^'), failMsg);
+    });
+  });
+
+});
+
+

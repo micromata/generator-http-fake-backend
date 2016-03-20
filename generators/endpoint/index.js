@@ -6,6 +6,7 @@ var titleCase = require('title-case');
 var helper = require('./promptingHelpers');
 
 module.exports = yeoman.generators.Base.extend({
+
   prompting: function () {
     var that = this;
     var done = that.async();

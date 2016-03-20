@@ -2,6 +2,8 @@
 var path = require('path');
 var assert = require('yeoman-assert');
 var helpers = require('yeoman-generator').test;
+var helper = require('../generators/app/promptingHelpers');
+var chalk = require('chalk');
 
 describe('generator-http-fake-backend → server', function () {
   before(function (done) {
@@ -84,6 +86,23 @@ describe('generator-http-fake-backend → server', function () {
       'test/server/api/fixtures/response.json',
       'test/server/web/index.js'
     ]);
+  });
+
+});
+
+describe('generator-http-fake-backend → server → prompting helpers', function () {
+
+  describe('→ validateApiPrefix()', function () {
+
+    it('should accept a leading slash', function () {
+      assert.equal(helper.validateApiPrefix('/api'), true);
+    });
+    it('should fail with a trailing slash', function () {
+      assert.equal(helper.validateApiPrefix('/api/'), chalk.red('please enter API prefix without trailing  `/`.'));
+    });
+    it('should fail when missing a leading slash', function () {
+      assert.equal(helper.validateApiPrefix('api'), chalk.red('API prefix has to begin with a `/`.'));
+    });
   });
 
 });
