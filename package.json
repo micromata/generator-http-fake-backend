@@ -19,7 +19,9 @@
     "backend",
     "yeoman-generator",
     "micromata",
-    "server"
+    "server",
+    "rest",
+    "restful"
   ],
   "dependencies": {
     "chalk": "^1.0.0",

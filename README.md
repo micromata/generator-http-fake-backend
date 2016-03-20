@@ -1,7 +1,9 @@
-[![NPM version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![Dependency Status][daviddm-image]][daviddm-url]
-[![Coverage percentage][coveralls-image]][coveralls-url]
+[![npm version](https://badge.fury.io/js/generator-http-fake-backend.svg)](http://badge.fury.io/js/generator-http-fake-backend)
+[![Build Status](https://travis-ci.org/micromata/generator-http-fake-backend.svg?branch=master)](https://travis-ci.org/micromata/generator-http-fake-backend)
+[![Coverage Status](https://coveralls.io/repos/github/micromata/generator-http-fake-backend/badge.svg?branch=master)](https://coveralls.io/github/micromata/generator-http-fake-backend?branch=master)
+[![Dependency Status](https://david-dm.org/micromata/generator-http-fake-backend.svg)](https://david-dm.org/micromata/generator-http-fake-backend)
+[![devDependency Status](https://david-dm.org/micromata/generator-http-fake-backend/dev-status.svg?theme=shields.io)](https://david-dm.org/micromata/generator-http-fake-backend#info=devDependencies)
+[![Unicorn](https://img.shields.io/badge/unicorn-approved-ff69b4.svg?style=flat)](https://www.youtube.com/watch?v=qRC4Vk6kisY) 
 
 # generator-http-fake-backend
 > Build a fake backend by providing the content of JSON files or JavaScript objects through configurable routes.
@@ -15,26 +17,40 @@ npm install -g yo
 npm install -g generator-http-fake-backend
 ```
 
-Then generate your new project:
+Then generate your fake backend server:
 
 ```bash
 yo http-fake-backend
 ```
+ 
+
+## Generating endpoints
+
+```bash
+yo http-fake-backend:endpoint
+```
+
+Please see detailed info regarding how to adjust your endpoints over here: 
+<https://github.com/micromata/http-fake-backend>
+
+## Start the server
+
+```
+npm run start:dev
+```
+
+This way the server uses `nodemon` to restart itself on changes. 
+This way you dont have to restart the server in case you changed an endpoint.
 
 ## Getting To Know Yeoman
 
-Yeoman has a heart of gold. He&#39;s a person with feelings and opinions, but he&#39;s very easy to work with. If you think he&#39;s too opinionated, he can be easily convinced. Feel free to [learn more about him](http://yeoman.io/).
+Yeoman has a heart of gold. He’s a person with feelings and opinions, but he’s very easy to work with. If you think he’s too opinionated, he can be easily convinced. Feel free to [learn more about him](http://yeoman.io/).
 
 ## License
 
-MIT © [Michael Kühnel](http://micromata.de)
+MIT © [Micromata](www.micromata.de)
+
+Please be aware of the licenses of the components we use in this project.
+Everything else that has been developed by the contributions to this project is under [MIT License](LICENSE).
 
 
-[npm-image]: https://badge.fury.io/js/generator-http-fake-backend.svg
-[npm-url]: https://npmjs.org/package/generator-http-fake-backend
-[travis-image]: https://travis-ci.org/micromata/generator-http-fake-backend.svg?branch=master
-[travis-url]: https://travis-ci.org/micromata/generator-http-fake-backend
-[daviddm-image]: https://david-dm.org/micromata/generator-http-fake-backend.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/micromata/generator-http-fake-backend
-[coveralls-image]: https://coveralls.io/repos/micromata/generator-http-fake-backend/badge.svg
-[coveralls-url]: https://coveralls.io/r/micromata/generator-http-fake-backend
