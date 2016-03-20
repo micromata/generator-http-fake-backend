@@ -3,6 +3,7 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var superb = require('superb');
+var helper = require('./promptingHelpers');
 
 module.exports = yeoman.generators.Base.extend({
   prompting: function () {
@@ -26,19 +27,7 @@ module.exports = yeoman.generators.Base.extend({
         message: 'What should be the url prefix of the endpoints?',
         default: '/api',
         store: true,
-        validate: function (value) {
-          var check = value.match(/^\/|\/$/g);
-          var returnValue;
-
-          if (check === null) {
-            returnValue = chalk.red('API prefix has to begin with a `/`.');
-          } else if (check[1] === '/') {
-            returnValue = chalk.red('please enter API prefix without trailing  `/`.');
-          } else {
-            returnValue = true;
-          }
-          return returnValue;
-        }
+        validate: helper.validateApiPrefix
       }
     ];
 

@@ -1,9 +1,9 @@
 'use strict';
 var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
 var yosay = require('yosay');
 var superb = require('superb');
 var titleCase = require('title-case');
+var helper = require('./promptingHelpers');
 
 module.exports = yeoman.generators.Base.extend({
   prompting: function () {
@@ -28,28 +28,13 @@ module.exports = yeoman.generators.Base.extend({
         when: function () {
           return !that.endpoint.urls.length;
         },
-        validate: function (value) {
-          var returnvalue = chalk.red('Please enter a valid name. This will be a part of the url.');
-          var validChars = value.match(/[^a-zA-Z0-9(),!.~$&'\-_*+;=:@]+/g);
-          if (!validChars && value) {
-            returnvalue = true;
-          }
-          return returnvalue;
-        }
+        validate: helper.validateEndpoint
       },
       {
         type: 'input',
         name: 'params',
         message: 'Please enter URL path params (optional)',
-        validate: function (value) {
-          var returnvalue = chalk.red('Please enter valid path parameters with a leading `/`. See http://hapijs.com/api#path-parameters');
-          var validChars = value.match(/[^a-zA-Z0-9()\/,!.~$&'\-_*+;=:@]+/g);
-          var leadingSlash = value.match(/^\//);
-          if ((!validChars && leadingSlash) || value === '') {
-            returnvalue = true;
-          }
-          return returnvalue;
-        }
+        validate: helper.validateParams
       }, {
         type: 'list',
         name: 'method',
@@ -60,14 +45,7 @@ module.exports = yeoman.generators.Base.extend({
         name: 'responseType',
         message: 'What would you like to return?',
         choices: ['The content of a JSON file', 'A JavaScript object literal'],
-        filter: function (value) {
-          if (value === 'The content of a JSON file') {
-            value = 'json';
-          } else {
-            value = 'object';
-          }
-          return value;
-        }
+        filter: helper.filterResponseType
       }, {
         type: 'input',
         name: 'response',
@@ -76,15 +54,7 @@ module.exports = yeoman.generators.Base.extend({
         when: function (answers) {
           return answers.responseType === 'json';
         },
-        validate: function (value) {
-          var returnvalue = chalk.red('Please enter valid filename (*.json)');
-          var fileExt = value.match(/\w\.json$/);
-          var validChars = value.match(/[^a-zA-Z0-9(),!.~$&'\-_*+;=:@]+/g);
-          if (fileExt && !validChars) {
-            returnvalue = true;
-          }
-          return returnvalue;
-        }
+        validate: helper.validateJson
       }, {
         type: 'input',
         name: 'response',
@@ -93,18 +63,8 @@ module.exports = yeoman.generators.Base.extend({
         when: function (answers) {
           return answers.responseType === 'object';
         },
-        filter: function (value) {
-          return value.replace(/'/g, '"');
-        },
-        validate: function (value) {
-          var returnvalue = chalk.red('Your input doesn’t look like an object or array at all.');
-          var isArray = value.match(/^\[/) && value.match(/]$/);
-          var isObject = value.match(/^{/) && value.match(/\}$/);
-          if (isArray || isObject) {
-            returnvalue = true;
-          }
-          return returnvalue;
-        }
+        filter: helper.filterJsObject,
+        validate: helper.validateJsObject
       }, {
         type: 'confirm',
         name: 'anotherUrl',
