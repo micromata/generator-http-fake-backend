@@ -5,8 +5,25 @@
 [![devDependency Status](https://david-dm.org/micromata/generator-http-fake-backend/dev-status.svg?theme=shields.io)](https://david-dm.org/micromata/generator-http-fake-backend#info=devDependencies)
 [![Unicorn](https://img.shields.io/badge/unicorn-approved-ff69b4.svg?style=flat)](https://www.youtube.com/watch?v=qRC4Vk6kisY) 
 
-# generator-http-fake-backend
+# Yeoman generator for http-fake-backend
+
 > Build a fake backend by providing the content of JSON files or JavaScript objects through configurable routes.
+
+```
+     _-----_
+    |       |    .--------------------------.
+    |--(o)--|    |      Welcome to the      |
+   `---------´   |        phenomenal        |
+    ( _´U`_ )    |     http-fake-backend    |
+    /___A___\    |        generator!        |
+     |  ~  |     '--------------------------'
+   __'.___.'__   
+ ´   `  |° ´ Y ` 
+```
+
+Please check the [README](https://github.com/micromata/http-fake-backend) of »http-fake-backend« to get detailed information about what it’s all about.
+
+This readme only contains the gist of it and mainly describes Yeoman specific things.
 
 ## Installation
 
