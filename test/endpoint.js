@@ -14,7 +14,7 @@ describe('generator-http-fake-backend → endpoint', function () {
         params: '/bar',
         method: 'GET',
         responseType: 'object',
-        response: '{ status: "ok" }',
+        response: '{ status: \'ok\' }',
         anotherUrl: false
       })
       .on('end', done);
@@ -37,7 +37,7 @@ describe('generator-http-fake-backend → endpoint', function () {
       assert.fileContent('server/api/endpoint.js', /method: 'GET',/);
     });
     it('should contain the prompted response', function () {
-      assert.fileContent('server/api/endpoint.js', /response: '{ status: "ok" }'/);
+      assert.fileContent('server/api/endpoint.js', /response: { status: 'ok' }/);
     });
 
   });
@@ -65,6 +65,20 @@ describe('generator-http-fake-backend → endpoint → JSON file', function () {
     ]);
   });
 
+  it('should create endpoint.js', function () {
+    assert.file([
+      'server/api/endpoint.js'
+    ]);
+  });
+
+  describe('endpoint.js', function () {
+
+    it('should contain the prompted response', function () {
+      assert.fileContent('server/api/endpoint.js', /response: '\/json-templates\/foo.json'/);
+    });
+
+  });
+
 });
 
 describe('generator-http-fake-backend → endpoint → prompting helpers', function () {
@@ -73,12 +87,6 @@ describe('generator-http-fake-backend → endpoint → prompting helpers', funct
     it('should return correct outputs', function () {
       assert.equal(helper.filterResponseType('The content of a JSON file'), 'json');
       assert.equal(helper.filterResponseType('A JavaScript object literal'), 'object');
-    });
-  });
-
-  describe('→ filterJsObject()', function () {
-    it('should return single quotes as double qoutes', function () {
-      assert.equal(helper.filterJsObject("''"), '""');
     });
   });
 

@@ -60,7 +60,7 @@ module.exports = yeoman.generators.Base.extend({
         type: 'input',
         name: 'response',
         message: 'Please enter a JavaScript object literal or array',
-        default: '{ status: "ok" }',
+        default: '{ status: \'ok\' }',
         when: function (answers) {
           return answers.responseType === 'object';
         },
