@@ -5,7 +5,7 @@ var yosay = require('yosay');
 var superb = require('superb');
 var helper = require('./promptingHelpers');
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = yeoman.Base.extend({
   prompting: function () {
     var done = this.async();
 
