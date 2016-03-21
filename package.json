@@ -1,6 +1,6 @@
 {
   "name": "generator-http-fake-backend",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Build a fake backend by providing the content of JSON files or JavaScript objects through configurable routes.",
   "homepage": "https://github.com/micromata/generator-http-fake-backend",
   "author": {
@@ -21,7 +21,11 @@
     "micromata",
     "server",
     "rest",
-    "restful"
+    "restful",
+    "data",
+    "mocks",
+    "mocking",
+    "mock"
   ],
   "dependencies": {
     "chalk": "^1.0.0",
