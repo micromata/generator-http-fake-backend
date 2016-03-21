@@ -63,6 +63,10 @@ This way you dont have to restart the server in case you changed an endpoint.
 
 Yeoman has a heart of gold. He’s a person with feelings and opinions, but he’s very easy to work with. If you think he’s too opinionated, he can be easily convinced. Feel free to [learn more about him](http://yeoman.io/).
 
+## Related
+
+* [http-fake-backend](https://github.com/micromata/http-fake-backend) – Static version of the hapi server that this genereator creates.
+
 ## License
 
 MIT © [Micromata](www.micromata.de)
