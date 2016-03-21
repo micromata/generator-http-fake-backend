@@ -13,7 +13,7 @@ module.exports = yeoman.generators.Base.extend({
 
     // Have Yeoman greet the user.
     that.log(yosay(
-      titleCase(superb()) + ', lets create an endpoint …'
+      titleCase(superb()) + ', let’s create an endpoint …'
     ));
 
     that.endpoint = {
