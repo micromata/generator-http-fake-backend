@@ -1,5 +1,6 @@
 'use strict';
 var yeoman = require('yeoman-generator');
+var chalk = require('chalk');
 var yosay = require('yosay');
 var superb = require('superb');
 var titleCase = require('title-case');
@@ -121,5 +122,13 @@ module.exports = yeoman.generators.Base.extend({
         );
       }
     });
+  },
+
+  end: function () {
+    this.log(yosay(
+      'That’s it. Feel free to fire up the server with ' +
+        chalk.green('`npm run start:dev`') +
+        '.'
+    ));
   }
 });

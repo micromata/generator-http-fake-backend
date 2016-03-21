@@ -131,6 +131,17 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   install: function () {
-    this.installDependencies();
+    var that = this;
+    this.installDependencies({
+      npm: true,
+      bower: false,
+      callback: function () {
+        that.log(yosay(
+          'That’s it. Feel free to fire up the server with ' +
+            chalk.green('`npm run start:dev`') +
+            'or use our subgenerator to create endpoints.'
+        ));
+      }
+    });
   }
 });
