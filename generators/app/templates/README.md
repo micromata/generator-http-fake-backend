@@ -153,12 +153,13 @@ API_PREFIX=/api
 ```
 
 
+## Related
+
+* [Yeoman Generator](https://github.com/micromata/generator-http-fake-backend) – Easily generate your fake backend and use sub-generators to setup endpoints  like :zap:
+
 ## License
 
 Please be aware of the licenses of the components we use in this project.
 Everything else that has been developed by the contributions to this project is under [MIT License](LICENSE).
 
-## Related
-
-* [Yeoman Generator](https://github.com/micromata/generator-http-fake-backend) – Easily generate your fake backend and use sub-generators to setup endpoints  like :zap:
 
