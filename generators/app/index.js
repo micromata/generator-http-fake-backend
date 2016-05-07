@@ -31,7 +31,7 @@ module.exports = yeoman.Base.extend({
       }
     ];
 
-    this.prompt(prompts, function (props) {
+    this.prompt(prompts).then(function (props) {
       this.props = props;
       // To access props later use this.props.someOption;
 

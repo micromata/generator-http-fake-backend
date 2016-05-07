@@ -78,7 +78,7 @@ module.exports = yeoman.Base.extend({
     prompting(that);
 
     function prompting(that) {
-      that.prompt(prompts, function (props) {
+      that.prompt(prompts).then(function (props) {
         that.props = props;
 
         if (!that.endpoint.name) {
