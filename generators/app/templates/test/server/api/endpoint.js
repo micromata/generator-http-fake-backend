@@ -107,7 +107,7 @@ lab.experiment('Setup endpoints', () => {
         server.inject(request, (response) => {
 
             Code.expect(response.statusCode).to.equal(405);
-            Code.expect(response.result).to.deep.equal({
+            Code.expect(response.result).to.equal({
                 statusCode: 405,
                 error: 'Method Not Allowed'
             });
@@ -126,7 +126,7 @@ lab.experiment('Setup endpoints', () => {
         server.inject(request, (response) => {
 
             Code.expect(response.statusCode).to.equal(200);
-            Code.expect(response.result).to.deep.equal({ response: 'Yeah' });
+            Code.expect(response.result).to.equal({ response: 'Yeah' });
 
             done();
         });
@@ -142,7 +142,7 @@ lab.experiment('Setup endpoints', () => {
         server.inject(request, (response) => {
 
             Code.expect(response.statusCode).to.equal(200);
-            Code.expect(response.result).to.deep.equal({ javascript: 'object' });
+            Code.expect(response.result).to.equal({ javascript: 'object' });
 
             done();
         });
@@ -158,7 +158,7 @@ lab.experiment('Setup endpoints', () => {
         server.inject(request, (response) => {
 
             Code.expect(response.statusCode).to.equal(200);
-            Code.expect(response.result).to.deep.equal({ response: 'Yeah' });
+            Code.expect(response.result).to.equal({ response: 'Yeah' });
 
             done();
         });
@@ -174,7 +174,7 @@ lab.experiment('Setup endpoints', () => {
         server.inject(request, (response) => {
 
             Code.expect(response.statusCode).to.equal(200);
-            Code.expect(response.result).to.deep.equal({ response: 'Yeah' });
+            Code.expect(response.result).to.equal({ response: 'Yeah' });
 
             done();
         });
@@ -190,7 +190,7 @@ lab.experiment('Setup endpoints', () => {
         server.inject(request, (response) => {
 
             Code.expect(response.statusCode).to.equal(200);
-            Code.expect(response.result).to.deep.equal({ success: true });
+            Code.expect(response.result).to.equal({ success: true });
 
             done();
         });
@@ -206,7 +206,7 @@ lab.experiment('Setup endpoints', () => {
         server.inject(request, (response) => {
 
             Code.expect(response.statusCode).to.equal(200);
-            Code.expect(response.result).to.deep.equal({ response: 'Yeah' });
+            Code.expect(response.result).to.equal({ response: 'Yeah' });
 
             done();
         });
