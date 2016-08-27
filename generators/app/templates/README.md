@@ -81,25 +81,26 @@ Each endpoint needs a configuration file in `/server/api/` to define routes, htt
 ```js
 module.exports = SetupEndpoint({
     name: 'articles',
-    urls: [
-        {
-            params: '/{filter}/{offset}/{items}',
-            requests: [{
-                method: 'GET',
-                response: '/json-templates/articles.json'
-            }]
-        },
-        {
-            params: '/update',
-            requests: [{
-                method: 'PATCH',
-                response: { patch: true }
-            },{
-                method: 'PUT',
-                response: { put: true }
-            }]  
-        }
-    ],
+    urls: [{
+        params: '/{filter}/{offset}/{items}',
+        requests: [{
+            method: 'GET',
+            response: '/json-templates/articles.json'
+        }]
+    }, {
+        params: '/update',
+        requests: [{
+            method: ['PUT', 'PATCH'],
+            response: {
+                success: true
+            }
+        }, {
+            method: 'DELETE',
+            response: {
+                deleted: true
+            }
+        }]
+    }],
     statusCode: 505
 });
 ```
@@ -116,12 +117,13 @@ The configuration object in Detail:
     `http://localhost:8081/api/articles/foo/bar/baz`
     whereas:
     `http://localhost:8081/api/articles` will return a 404 error.
-  * See hapi docs regarding [path parameters](http://hapijs.com/api#path-parameters).
+  * See hapi docs. For example regarding optional [path parameters](http://hapijs.com/api#path-parameters).
 * `urls.requests`
     *  You need to add at least one request object.
 * `urls.requests.method` 
     * optional. Uses `GET` when not defined.
-    * is used to define the http method to which the endpoint will listen.
+    * `string`, or `array` of strings.
+    * is used to define the http method(s) to which the endpoint will listen.
 * `urls.requests.response` 
   * Could be a string pointing to a JSON template:
     *   `response: '/json-templates/articles.json'`

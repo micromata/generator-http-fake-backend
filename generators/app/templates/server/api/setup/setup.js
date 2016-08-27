@@ -21,7 +21,7 @@ module.exports = function (settings) {
 
                 const method = action.method || 'GET';
                 const supportedMethod = {
-                    method: method,
+                    method,
                     path: path + params,
                     handler: function (request, reply) {
 
@@ -76,8 +76,8 @@ module.exports = function (settings) {
 
     exportEndpoint.register.attributes = {
         name: settings.name,
-        path: path,
-        urls: urls
+        path,
+        urls
     };
 
     return exportEndpoint;

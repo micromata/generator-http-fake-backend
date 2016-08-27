@@ -1,6 +1,6 @@
 {
   "name": "http-fake-backend",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "Build a fake backend by providing the content of JSON files or JavaScript objects through configurable routes.",
   "license": "MIT",
   "main": "index.js",
@@ -19,27 +19,27 @@
     "node": ">=4.0.0"
   },
   "dependencies": {
-    "boom": "^3.2.1",
+    "boom": "^4.0.0",
     "confidence": "^3.x.x",
     "dotenv": "^2.0.0",
     "glue": "^3.x.x",
-    "good": "^7.0.1",
+    "good": "^7.0.2",
     "good-console": "^6.1.2",
     "good-squeeze": "^4.0.0",
     "handlebars": "^4.0.5",
-    "hapi": "^13.x.x",
-    "inert": "^4.0.0",
+    "hapi": "^15.x.x",
+    "inert": "^4.0.2",
     "require-dir": "^0.3.0",
     "vision": "^4.x.x",
     "visionary": "^6.x.x"
   },
   "devDependencies": {
-    "code": "^3.0.1",
-    "coveralls": "^2.11.9",
-    "eslint": "^2.13.0",
-    "eslint-config-hapi": "^9.1.0",
+    "code": "^3.0.2",
+    "coveralls": "^2.11.12",
+    "eslint": "^3.4.0",
+    "eslint-config-hapi": "^10.0.0",
     "eslint-plugin-hapi": "^4.0.0",
-    "lab": "^10.x.x",
+    "lab": "^11.x.x",
     "nodemon": "^1.x.x"
   }
 }
