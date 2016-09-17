@@ -49,6 +49,15 @@ const Endpoint = SetupEndpoint({
                 method: 'DELETE',
                 response: '/test/server/api/fixtures/response.json'
             }]
+        },
+        {
+            params: '/multipleMethods',
+            requests: [{
+                method: ['PUT', 'PATCH'],
+                response: {
+                    success: true
+                }
+            }]
         }
     ]
 });
@@ -100,7 +109,7 @@ lab.experiment('Setup endpoints', () => {
     lab.test('returns 405: Method Not Allowed for undefined methods', (done) => {
 
         request = {
-            method: 'post',
+            method: 'POST',
             url: apiUrlPrefix + '/endpoint/read'
         };
 
@@ -210,6 +219,49 @@ lab.experiment('Setup endpoints', () => {
 
             done();
         });
+    });
+
+    lab.test('correct json for multiple Methods', (done) => {
+
+        const putRequest = {
+            method: 'PUT',
+            url: apiUrlPrefix + '/endpoint/multipleMethods'
+        };
+
+        const patchRequest = {
+            method: 'PATCH',
+            url: apiUrlPrefix + '/endpoint/multipleMethods'
+        };
+
+        const postRequest = {
+            method: 'POST',
+            url: apiUrlPrefix + '/endpoint/multipleMethods'
+        };
+
+        server.inject(putRequest, (response) => {
+
+            Code.expect(response.statusCode).to.equal(200);
+            Code.expect(response.result).to.equal({ success: true });
+        });
+
+        server.inject(patchRequest, (response) => {
+
+            Code.expect(response.statusCode).to.equal(200);
+            Code.expect(response.result).to.equal({ success: true });
+        });
+
+        server.inject(postRequest, (response) => {
+
+            Code.expect(response.statusCode).to.equal(405);
+            Code.expect(response.result).to.equal({
+                statusCode: 405,
+                error: 'Method Not Allowed'
+            });
+
+            done();
+        });
+
+
     });
 
 });
