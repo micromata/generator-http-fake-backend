@@ -35,7 +35,7 @@
     "yosay": "^1.2.0"
   },
   "devDependencies": {
-    "eslint": "^3.4.0",
+    "eslint": "^3.5.0",
     "eslint-config-xo-space": "^0.14.0",
     "gulp": "^3.9.1",
     "gulp-coveralls": "^0.1.4",
@@ -47,7 +47,7 @@
     "gulp-nsp": "^2.4.2",
     "gulp-plumber": "^1.1.0",
     "yeoman-assert": "^2.2.1",
-    "yeoman-test": "^1.4.0"
+    "yeoman-test": "^1.5.0"
   },
   "eslintConfig": {
     "extends": "xo-space",
