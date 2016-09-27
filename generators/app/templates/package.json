@@ -1,6 +1,6 @@
 {
   "name": "http-fake-backend",
-  "version": "3.0.7",
+  "version": "3.1.0",
   "description": "Build a fake backend by providing the content of JSON files or JavaScript objects through configurable routes.",
   "license": "MIT",
   "main": "index.js",
@@ -19,27 +19,27 @@
     "node": ">=4.0.0"
   },
   "dependencies": {
-    "boom": "^4.0.0",
-    "confidence": "^3.x.x",
-    "dotenv": "^2.0.0",
-    "glue": "^4.x.x",
-    "good": "^7.0.2",
-    "good-console": "^6.1.2",
-    "good-squeeze": "^5.0.0",
-    "handlebars": "^4.0.5",
-    "hapi": "^15.x.x",
-    "inert": "^4.0.2",
-    "require-dir": "^0.3.0",
-    "vision": "^4.x.x",
-    "visionary": "^6.x.x"
+    "boom": "4.1.0",
+    "confidence": "3.0.1",
+    "dotenv": "2.0.0",
+    "glue": "4.0.0",
+    "good": "7.0.2",
+    "good-console": "6.1.2",
+    "good-squeeze": "5.0.0",
+    "handlebars": "4.0.5",
+    "hapi": "15.1.0",
+    "inert": "4.0.2",
+    "require-dir": "0.3.0",
+    "vision": "4.1.0",
+    "visionary": "6.0.2"
   },
   "devDependencies": {
-    "code": "^3.0.2",
-    "coveralls": "^2.11.13",
-    "eslint": "^3.5.0",
-    "eslint-config-hapi": "^10.0.0",
-    "eslint-plugin-hapi": "^4.0.0",
-    "lab": "^11.x.x",
-    "nodemon": "^1.x.x"
+    "code": "4.0.0",
+    "coveralls": "2.11.14",
+    "eslint": "3.6.1",
+    "eslint-config-hapi": "10.0.0",
+    "eslint-plugin-hapi": "4.0.0",
+    "lab": "11.1.0",
+    "nodemon": "1.10.2"
   }
 }

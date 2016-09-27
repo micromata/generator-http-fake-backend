@@ -12,7 +12,7 @@
 Comes as a Node.js server. Useful for mocking, testing and developing independent of the »real« backend.
 
 ## Example
-Let’s say you need an endpoint like <http://localhost:8081/api/foo> which should return:
+Let’s say you need an endpoint like <http://localhost:8081/api/example> which should return:
 
 ```
 {
@@ -74,21 +74,38 @@ This one comes is without any magic (eg. `foreverjs`)
 
 Each endpoint needs a configuration file in `/server/api/` to define routes, http method and the response.
 
-### Example configuration
+### Example configurations
 
-`/server/api/articles.js`:
+#### Simple Example
+
+`/server/api/simpleExample.js`:
 
 ```js
 module.exports = SetupEndpoint({
-    name: 'articles',
+    name: 'simpleExample',
     urls: [{
-        params: '/{filter}/{offset}/{items}',
+        requests: [
+            { response: '/json-templates/simpleExample.json' }
+        ]
+    }]
+});
+```
+
+#### Advanced Example
+
+`/server/api/anotherExample.js`:
+
+```js
+module.exports = SetupEndpoint({
+    name: 'anotherExample',
+    urls: [{
+        params: '/read',
         requests: [{
             method: 'GET',
-            response: '/json-templates/articles.json'
+            response: '/json-templates/anotherExample.json'
         }]
     }, {
-        params: '/update',
+        params: '/update/{id}',
         requests: [{
             method: ['PUT', 'PATCH'],
             response: {
@@ -100,8 +117,47 @@ module.exports = SetupEndpoint({
                 deleted: true
             }
         }]
-    }],
-    statusCode: 505
+    }]
+});
+```
+
+#### Faking HTTP errors and status code
+
+`/server/api/fakingStatusCodes.js`:
+
+```js
+module.exports = SetupEndpoint({
+    name: 'statusCodes',
+    urls: [
+        {
+            params: '/boomError',
+            requests: [{
+                // Returns a 402 status code + error message provided by boom:
+                // {
+                //   "error" : "Payment Required",
+                //   "statusCode" : 402
+                // }
+                statusCode: 402
+            }]
+        },
+        {
+            params: '/customError',
+            requests: [{
+                // Returns a HTTP status code 406 and a self defined response:
+                response: { error: true },
+                statusCode: 406
+            }]
+        },
+        {
+            params: '/regularResponse',
+            requests: [{
+                // Returns a 401 error provided by boom
+                // as defined on endpoint level
+                response: '/json-templates/anotherExample.json'
+            }]
+        }
+    ],
+    statusCode: 401
 });
 ```
 
@@ -129,9 +185,15 @@ The configuration object in Detail:
     *   `response: '/json-templates/articles.json'`
   * Or just a JavaScript object:
     * `response: { success: true }`
+* `urls.requests.statusCode` 
+  * Optional
+  * A status code (number)
+  * Will return: 
+    * a status code with a self defined response if you provide a response property
+    * a status code with a predefined error object provided by [boom](https://github.com/hapijs/boom) if you dont provide a response property for that request.
 * `statusCode`
   * Optional
-  * Every route of this endpoint will return a http error with the given status code.
+  * Every route of this endpoint will return a HTTP error with the given status code provided by [boom](https://github.com/hapijs/boom).
 
 ## Configuration
 

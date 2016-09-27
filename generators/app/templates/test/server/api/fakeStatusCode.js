@@ -8,13 +8,52 @@ const SetupEndpoint = require('../../../server/api/setup/setup.js');
 
 const apiUrlPrefix = Config.get('/apiUrlPrefix');
 
-const Endpoint = SetupEndpoint({
-    name: 'statuscode',
+const EndpointLevel = SetupEndpoint({
+    name: 'endpoint',
     urls: [{
         requests: [
             { response: '/test/server/api/fixtures/response.json' }
         ]
     }],
+    statusCode: 401
+});
+
+const RequestLevel = SetupEndpoint({
+    name: 'request',
+    urls: [
+        {
+            params: '/boomError',
+            requests: [{ statusCode: 402 }]
+        },
+        {
+            params: '/customError',
+            requests: [
+                {
+                    response: { error: true },
+                    statusCode: 406
+                }
+            ]
+        }
+    ]
+});
+
+const RequestLevelBeatsEndpointLevel = SetupEndpoint({
+    name: 'requestBeatsEndpoint',
+    urls: [
+        {
+            params: '/boomError',
+            requests: [{ statusCode: 402 }]
+        },
+        {
+            params: '/customError',
+            requests: [
+                {
+                    response: { error: true },
+                    statusCode: 406
+                }
+            ]
+        }
+    ],
     statusCode: 401
 });
 
@@ -24,7 +63,11 @@ let server;
 
 lab.beforeEach((done) => {
 
-    const plugins = [Endpoint];
+    const plugins = [
+        EndpointLevel,
+        RequestLevel,
+        RequestLevelBeatsEndpointLevel
+    ];
     server = new Hapi.Server();
     server.connection({ port: Config.get('/port/web') });
     server.register(plugins, (err) => {
@@ -38,41 +81,111 @@ lab.beforeEach((done) => {
 });
 
 
-lab.experiment('Fake status code', () => {
+lab.experiment('Fake status codes', () => {
 
-    lab.beforeEach((done) => {
+    lab.experiment('on endpoint level', () => {
 
-        done();
-    });
-
-    lab.test('endpoint returns correct faked status code', (done) => {
-
-        request = {
-            method: 'GET',
-            url: apiUrlPrefix + '/statuscode'
-        };
-
-        server.inject(request, (response) => {
-
-            Code.expect(response.statusCode).to.equal(401);
+        lab.beforeEach((done) => {
 
             done();
         });
-    });
 
-    lab.test('undefined method returns correct faked status code', (done) => {
+        lab.test('returns correct error provided by boom', (done) => {
 
-        request = {
-            method: 'PUT',
-            url: apiUrlPrefix + '/statuscode'
-        };
+            request = {
+                method: 'GET',
+                url: apiUrlPrefix + '/endpoint'
+            };
 
-        server.inject(request, (response) => {
+            server.inject(request, (response) => {
 
-            Code.expect(response.statusCode).to.equal(401);
+                Code.expect(response.statusCode).to.equal(401);
 
-            done();
+                done();
+            });
+        });
+
+        lab.test('undefined method returns correct error provided by boom', (done) => {
+
+            request = {
+                method: 'PUT',
+                url: apiUrlPrefix + '/endpoint'
+            };
+
+            server.inject(request, (response) => {
+
+                Code.expect(response.statusCode).to.equal(401);
+
+                done();
+            });
         });
     });
 
+    lab.experiment('on request level', () => {
+
+        lab.test('returns correct error provided by boom', (done) => {
+
+            request = {
+                method: 'GET',
+                url: apiUrlPrefix + '/request/boomError'
+            };
+
+            server.inject(request, (response) => {
+
+                Code.expect(response.statusCode).to.equal(402);
+
+                done();
+            });
+        });
+
+        lab.test('returns correct faked status code with regular response', (done) => {
+
+            request = {
+                method: 'GET',
+                url: apiUrlPrefix + '/request/customError'
+            };
+
+            server.inject(request, (response) => {
+
+                Code.expect(response.statusCode).to.equal(406);
+                Code.expect(response.result).to.equal({ error: true });
+
+                done();
+            });
+        });
+    });
+
+    lab.experiment('request level beats endpoint level', () => {
+
+        lab.test('returns correct error provided by boom', (done) => {
+
+            request = {
+                method: 'GET',
+                url: apiUrlPrefix + '/requestBeatsEndpoint/boomError'
+            };
+
+            server.inject(request, (response) => {
+
+                Code.expect(response.statusCode).to.equal(402);
+
+                done();
+            });
+        });
+
+        lab.test('returns correct faked status code with regular response', (done) => {
+
+            request = {
+                method: 'GET',
+                url: apiUrlPrefix + '/requestBeatsEndpoint/customError'
+            };
+
+            server.inject(request, (response) => {
+
+                Code.expect(response.statusCode).to.equal(406);
+                Code.expect(response.result).to.equal({ error: true });
+
+                done();
+            });
+        });
+    });
 });

@@ -17,9 +17,9 @@ module.exports = function (settings) {
 
             const params = url.params || '';
 
-            url.requests.forEach((action) => {
+            url.requests.forEach((proposedRequest) => {
 
-                const method = action.method || 'GET';
+                const method = proposedRequest.method || 'GET';
                 const supportedMethod = {
                     method,
                     path: path + params,
@@ -27,21 +27,27 @@ module.exports = function (settings) {
 
                         let response;
 
-                        if (settings.statusCode) {
+                        if (proposedRequest.statusCode && !proposedRequest.response) {
+                            response = Boom.create(proposedRequest.statusCode);
+                        }
+                        else if (settings.statusCode && !proposedRequest.statusCode) {
                             response = Boom.create(settings.statusCode);
                         }
                         else {
                             server.log('info', 'Received payload:' + JSON.stringify(request.payload));
 
-                            if (typeof action.response === 'string') {
-                                response = require('../../..' + action.response);
+                            if (typeof proposedRequest.response === 'string') {
+                                response = require('../../..' + proposedRequest.response);
                             }
                             else {
-                                response = action.response;
+                                response = proposedRequest.response;
                             }
 
                         }
 
+                        if (proposedRequest.statusCode && proposedRequest.response) {
+                            return reply(response).code(proposedRequest.statusCode);
+                        }
                         return reply(response);
                     }
                 };
