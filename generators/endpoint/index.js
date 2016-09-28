@@ -46,7 +46,11 @@ module.exports = yeoman.Base.extend({
         type: 'list',
         name: 'responseType',
         message: 'What would you like to return?',
-        choices: ['The content of a JSON file', 'A JavaScript object literal'],
+        choices: [
+          'The content of a JSON file',
+          'A JavaScript object literal',
+          'An error object'
+        ],
         filter: helper.filterResponseType
       }, {
         type: 'input',
@@ -67,6 +71,24 @@ module.exports = yeoman.Base.extend({
         },
         filter: helper.filterJsObject,
         validate: helper.validateJsObject
+      }, {
+        type: 'input',
+        name: 'statusCode',
+        message: 'Please enter a valid HTTP error status code',
+        default: '400',
+        when: function (answers) {
+          return answers.responseType === 'error';
+        },
+        validate: helper.validateErrorStatusCode
+      }, {
+        type: 'input',
+        name: 'statusCode',
+        message: 'Please enter a valid HTTP status code',
+        default: '200',
+        when: function (answers) {
+          return answers.responseType === 'json' || answers.responseType === 'object';
+        },
+        validate: helper.validateStatusCode
       }, {
         type: 'confirm',
         name: 'anotherUrl',
@@ -90,7 +112,8 @@ module.exports = yeoman.Base.extend({
           requests: [{
             method: that.props.method,
             responseType: that.props.responseType,
-            response: that.props.response
+            response: that.props.response,
+            statusCode: that.props.statusCode
           }]
         });
 

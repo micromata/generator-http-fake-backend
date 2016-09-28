@@ -87,6 +87,7 @@ describe('generator-http-fake-backend → endpoint → prompting helpers', funct
     it('should return correct outputs', function () {
       assert.equal(helper.filterResponseType('The content of a JSON file'), 'json');
       assert.equal(helper.filterResponseType('A JavaScript object literal'), 'object');
+      assert.equal(helper.filterResponseType('An error object'), 'error');
     });
   });
 
@@ -147,6 +148,40 @@ describe('generator-http-fake-backend → endpoint → prompting helpers', funct
     });
     it('should fail when using forbidden chars', function () {
       assert.equal(helper.validateParams('/foo^^'), failMsg);
+    });
+  });
+
+  describe('→ validateErrorStatusCode()', function () {
+    var failMsg = chalk.red('Please enter valid 4xx or 5xx status code supported by https://github.com/hapijs/boom');
+
+    it('should accept entering `400`', function () {
+      assert.equal(helper.validateErrorStatusCode('400'), true);
+    });
+    it('should fail when entering a `200`', function () {
+      assert.equal(helper.validateErrorStatusCode('200'), failMsg);
+    });
+    it('should fail when using any random string', function () {
+      assert.equal(helper.validateErrorStatusCode('Hej there'), failMsg);
+    });
+  });
+
+  describe('→ validateStatusCode()', function () {
+    var failMsg = chalk.red('Please enter a number which reprents a valid HTTP status code');
+
+    it('should accept entering `400`', function () {
+      assert.equal(helper.validateStatusCode('400'), true);
+    });
+    it('should accept when entering a `200`', function () {
+      assert.equal(helper.validateStatusCode('200'), true);
+    });
+    it('should fail when entering a `2000`', function () {
+      assert.equal(helper.validateStatusCode('2000'), failMsg);
+    });
+    it('should fail when entering a `600`', function () {
+      assert.equal(helper.validateStatusCode('600'), failMsg);
+    });
+    it('should fail when using any random string', function () {
+      assert.equal(helper.validateStatusCode('Hej there'), failMsg);
     });
   });
 
