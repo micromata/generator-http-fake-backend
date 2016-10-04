@@ -47,6 +47,8 @@ yo http-fake-backend
 yo http-fake-backend:endpoint
 ```
 
+![Demo](https://d17oy1vhnax1f7.cloudfront.net/items/170V1V1a3H1q1C0g3d3y/demo.gif) 
+
 Please see detailed info regarding how to adjust your endpoints over here: 
 <https://github.com/micromata/http-fake-backend>
 
