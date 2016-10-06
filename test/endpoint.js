@@ -6,8 +6,8 @@ var helper = require('../generators/endpoint/promptingHelpers');
 var chalk = require('chalk');
 
 describe('generator-http-fake-backend → endpoint', function () {
-  before(function (done) {
-    helpers.run(path.join(__dirname, '../generators/endpoint'))
+  before(function () {
+    return helpers.run(path.join(__dirname, '../generators/endpoint'))
       .withOptions({someOption: true})
       .withPrompts({
         endpointName: 'endpoint',
@@ -17,7 +17,7 @@ describe('generator-http-fake-backend → endpoint', function () {
         response: '{ status: \'ok\' }',
         anotherUrl: false
       })
-      .on('end', done);
+      .toPromise();
   });
 
   it('should create endpoint.js', function () {
@@ -39,24 +39,27 @@ describe('generator-http-fake-backend → endpoint', function () {
     it('should contain the prompted response', function () {
       assert.fileContent('server/api/endpoint.js', /response: { status: 'ok' }/);
     });
+    it('should not contain a statuscode key', function () {
+      assert.noFileContent('server/api/endpoint.js', /statusCode/);
+    });
 
   });
 
 });
 
 describe('generator-http-fake-backend → endpoint → JSON file', function () {
-  before(function (done) {
-    helpers.run(path.join(__dirname, '../generators/endpoint'))
+  before(function () {
+    return helpers.run(path.join(__dirname, '../generators/endpoint'))
       .withOptions({someOption: true})
       .withPrompts({
         endpointName: 'endpoint',
-        params: '/bar',
         method: 'GET',
         responseType: 'json',
         response: 'foo.json',
+        statusCode: 204,
         anotherUrl: false
       })
-      .on('end', done);
+      .toPromise();
   });
 
   it('should create foo.json', function () {
@@ -75,6 +78,14 @@ describe('generator-http-fake-backend → endpoint → JSON file', function () {
 
     it('should contain the prompted response', function () {
       assert.fileContent('server/api/endpoint.js', /response: '\/json-templates\/foo.json'/);
+    });
+
+    it('should contain the correct statuscode', function () {
+      assert.fileContent('server/api/endpoint.js', /statusCode: 204/);
+    });
+
+    it('should not contain the params key', function () {
+      assert.noFileContent('server/api/endpoint.js', /params/);
     });
 
   });
