@@ -41,7 +41,8 @@ describe('generator-http-fake-backend → server', function () {
       'LICENSE',
       'nodemon.json',
       'package.json',
-      'README.md'
+      'README.md',
+      'yarn.lock'
     ]);
   });
 
