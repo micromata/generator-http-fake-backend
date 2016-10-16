@@ -40,6 +40,7 @@ Then generate your fake backend server:
 yo http-fake-backend
 ```
  
+*Hint: Use `yo http-fake-backend --skip-install && yarn install` if you have installed [Yarn](https://yarnpkg.com/) … and yup, the generated project has a lock file* :sparkling_heart:
 
 ## Generating endpoints
 
