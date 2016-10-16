@@ -84,6 +84,10 @@ module.exports = yeoman.Base.extend({
         this.templatePath('README.md'),
         this.destinationPath('README.md')
       );
+      this.fs.copy(
+        this.templatePath('yarn.lock'),
+        this.destinationPath('yarn.lock')
+      );
     },
 
     rootJsFiles: function () {
