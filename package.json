@@ -35,6 +35,7 @@
     "yosay": "1.2.1"
   },
   "devDependencies": {
+    "codeclimate-test-reporter": "^0.4.0",
     "eslint": "3.8.0",
     "eslint-config-xo-space": "0.15.0",
     "gulp": "3.9.1",
