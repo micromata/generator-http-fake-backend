@@ -3,3 +3,6 @@ node_js:
   - v6
   - v5
   - v4
+addons:
+  code_climate:
+    repo_token: 1df4f6b88354e9ddfb84b7b06388d78ed12fb808747bca045225cfea3e2fb377
