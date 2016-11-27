@@ -1,5 +1,6 @@
 [![GitHub version](https://badge.fury.io/gh/micromata%2Fhttp-fake-backend.svg)](https://badge.fury.io/gh/micromata%2Fhttp-fake-backend)
 [![Build Status](https://travis-ci.org/micromata/http-fake-backend.svg?branch=master)](https://travis-ci.org/micromata/http-fake-backend)
+[![Code Climate](https://codeclimate.com/github/micromata/http-fake-backend/badges/gpa.svg)](https://codeclimate.com/github/micromata/http-fake-backend)
 [![Coverage Status](https://coveralls.io/repos/github/micromata/http-fake-backend/badge.svg?branch=master)](https://coveralls.io/github/micromata/http-fake-backend?branch=master)
 [![Dependency Status](https://david-dm.org/micromata/http-fake-backend.svg)](https://david-dm.org/micromata/http-fake-backend)
 [![devDependency Status](https://david-dm.org/micromata/http-fake-backend/dev-status.svg?theme=shields.io)](https://david-dm.org/micromata/http-fake-backend#info=devDependencies)
@@ -35,7 +36,7 @@ git clone https://github.com/micromata/http-fake-backend.git
 npm install
 ```
 
-*Hint: Use `yarn install` instead of `npm install` if you have installed [Yarn](https://yarnpkg.com/)… and yup, we have a lock file :sparkling_heart:*
+*Hint: Use `yarn install` instead of `npm install` if you have installed [Yarn](https://yarnpkg.com/) … and yup, we have a lock file* :sparkling_heart:
 
 
 Or with help of [Yeoman](http://yeoman.io)
@@ -172,13 +173,13 @@ The configuration object in Detail:
   * You need to add at least one url object.
 * `urls.params`
   * Optional
-  * In this example a valid URL might be:
-    `http://localhost:8081/api/articles/foo/bar/baz`
-    whereas:
-    `http://localhost:8081/api/articles` will return a 404 error.
+  * URL path parameters with fixed and/or variable path segments.
+  * Example:
+    * `params: '/update/{id}'`
   * See hapi docs. For example regarding optional [path parameters](http://hapijs.com/api#path-parameters).
 * `urls.requests`
     *  You need to add at least one request object.
+    *  Multiple request objects are needed in case you like to serve different responses via different HTTP methods with the same URL.
 * `urls.requests.method` 
     * optional. Uses `GET` when not defined.
     * `string`, or `array` of strings.
@@ -196,7 +197,7 @@ The configuration object in Detail:
     * a status code with a predefined error object provided by [boom](https://github.com/hapijs/boom) if you dont provide a response property for that request.
 * `statusCode`
   * Optional
-  * Every route of this endpoint will return a HTTP error with the given status code provided by [boom](https://github.com/hapijs/boom).
+  * Every subroute of this endpoint will return a HTTP error with the given status code provided by [boom](https://github.com/hapijs/boom).
 
 ## Configuration
 
