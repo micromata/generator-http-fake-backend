@@ -35,13 +35,13 @@
     "yosay": "1.2.1"
   },
   "devDependencies": {
-    "codeclimate-test-reporter": "^0.4.0",
-    "eslint": "3.8.0",
+    "codeclimate-test-reporter": "0.4.0",
+    "eslint": "3.11.0",
     "eslint-config-xo-space": "0.15.0",
     "gulp": "3.9.1",
     "gulp-coveralls": "0.1.4",
     "gulp-eslint": "3.0.1",
-    "gulp-exclude-gitignore": "1.0.0",
+    "gulp-exclude-gitignore": "1.1.1",
     "gulp-istanbul": "1.1.1",
     "gulp-line-ending-corrector": "1.0.1",
     "gulp-mocha": "3.0.1",
