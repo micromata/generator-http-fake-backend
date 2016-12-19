@@ -1,12 +1,12 @@
 'use strict';
-var path = require('path');
-var assert = require('yeoman-assert');
-var helpers = require('yeoman-test');
-var helper = require('../generators/app/promptingHelpers');
-var chalk = require('chalk');
+const path = require('path');
+const assert = require('yeoman-assert');
+const helpers = require('yeoman-test');
+const helper = require('../generators/app/promptingHelpers');
+const chalk = require('chalk');
 
-describe('generator-http-fake-backend → server', function () {
-  before(function (done) {
+describe('generator-http-fake-backend → server', () => {
+  before(done => {
     helpers.run(path.join(__dirname, '../generators/app'))
       .withPrompts({
         serverPort: 8081,
@@ -15,7 +15,7 @@ describe('generator-http-fake-backend → server', function () {
       .on('end', done);
   });
 
-  it('should create dot files', function () {
+  it('should create dot files', () => {
     assert.file([
       '.editorconfig',
       '.env',
@@ -25,18 +25,16 @@ describe('generator-http-fake-backend → server', function () {
     ]);
   });
 
-  describe('.env', function () {
-
-    it('should contain the prompted port number', function () {
+  describe('.env', () => {
+    it('should contain the prompted port number', () => {
       assert.fileContent('.env', /SERVER_PORT=8081/);
     });
-    it('should contain the prompted api url prefix', function () {
+    it('should contain the prompted api url prefix', () => {
       assert.fileContent('.env', /API_PREFIX=\/api/);
     });
-
   });
 
-  it('should create meta files', function () {
+  it('should create meta files', () => {
     assert.file([
       'LICENSE',
       'nodemon.json',
@@ -46,7 +44,7 @@ describe('generator-http-fake-backend → server', function () {
     ]);
   });
 
-  it('should create JS files in root directory', function () {
+  it('should create JS files in root directory', () => {
     assert.file([
       'config.js',
       'index.js',
@@ -55,13 +53,13 @@ describe('generator-http-fake-backend → server', function () {
     ]);
   });
 
-  it('should create json-templates directory', function () {
+  it('should create json-templates directory', () => {
     assert.file([
       'json-templates/.gitkeep'
     ]);
   });
 
-  it('should create server files', function () {
+  it('should create server files', () => {
     assert.file([
       'server/api/setup/setup.js',
       'server/web/index.js',
@@ -77,7 +75,7 @@ describe('generator-http-fake-backend → server', function () {
     ]);
   });
 
-  it('should create test files', function () {
+  it('should create test files', () => {
     assert.file([
       'test/config.js',
       'test/index.js',
@@ -88,22 +86,18 @@ describe('generator-http-fake-backend → server', function () {
       'test/server/web/index.js'
     ]);
   });
-
 });
 
-describe('generator-http-fake-backend → server → prompting helpers', function () {
-
-  describe('→ validateApiPrefix()', function () {
-
-    it('should accept a leading slash', function () {
+describe('generator-http-fake-backend → server → prompting helpers', () => {
+  describe('→ validateApiPrefix()', () => {
+    it('should accept a leading slash', () => {
       assert.equal(helper.validateApiPrefix('/api'), true);
     });
-    it('should fail with a trailing slash', function () {
+    it('should fail with a trailing slash', () => {
       assert.equal(helper.validateApiPrefix('/api/'), chalk.red('please enter API prefix without trailing  `/`.'));
     });
-    it('should fail when missing a leading slash', function () {
+    it('should fail when missing a leading slash', () => {
       assert.equal(helper.validateApiPrefix('api'), chalk.red('API prefix has to begin with a `/`.'));
     });
   });
-
 });

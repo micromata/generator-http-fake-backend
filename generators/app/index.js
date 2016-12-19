@@ -1,21 +1,21 @@
 'use strict';
-var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
-var yosay = require('yosay');
-var superb = require('superb');
-var helper = require('./promptingHelpers');
+const Generator = require('yeoman-generator');
+const chalk = require('chalk');
+const yosay = require('yosay');
+const superb = require('superb');
+const helper = require('./promptingHelpers');
 
-module.exports = yeoman.extend({
-  prompting: function () {
+module.exports = class extends Generator {
+  prompting() {
     console.log('this', this.dir);
-    var done = this.async();
+    const done = this.async();
 
     // Have Yeoman greet the user.
-    this.log(yosay(
-      'Welcome to the ' + superb() + ' ' + chalk.red('http-fake-backend') + ' generator!'
-    ));
+    this.log(yosay(`
+      Welcome to the ${superb()} ${chalk.yellow('http-fake-backend')} generator!
+    `));
 
-    var prompts = [
+    const prompts = [
       {
         type: 'input',
         name: 'serverPort',
@@ -32,128 +32,118 @@ module.exports = yeoman.extend({
       }
     ];
 
-    this.prompt(prompts).then(function (props) {
+    this.prompt(prompts).then(props => {
       this.props = props;
       // To access props later use this.props.someOption;
 
       done();
-    }.bind(this));
-  },
+    });
+  }
 
-  writing: {
+  writing() {
+  // Dotfiles
+    this.fs.copy(
+      this.templatePath('editorconfig'),
+      this.destinationPath('.editorconfig')
+    );
+    this.fs.copyTpl(
+      this.templatePath('_env'),
+      this.destinationPath('.env'), {
+        serverPort: this.props.serverPort,
+        apiPrefix: this.props.apiPrefix
+      }
+    );
+    this.fs.copy(
+      this.templatePath('eslintrc'),
+      this.destinationPath('.eslintrc')
+    );
+    this.fs.copy(
+      this.templatePath('gitattributes'),
+      this.destinationPath('.gitattributes')
+    );
+    this.fs.copy(
+      this.templatePath('gitignore'),
+      this.destinationPath('.gitignore')
+    );
 
-    dotFiles: function () {
-      this.fs.copy(
-        this.templatePath('editorconfig'),
-        this.destinationPath('.editorconfig')
-      );
-      this.fs.copyTpl(
-        this.templatePath('_env'),
-        this.destinationPath('.env'), {
-          serverPort: this.props.serverPort,
-          apiPrefix: this.props.apiPrefix
-        }
-      );
-      this.fs.copy(
-        this.templatePath('eslintrc'),
-        this.destinationPath('.eslintrc')
-      );
-      this.fs.copy(
-        this.templatePath('gitattributes'),
-        this.destinationPath('.gitattributes')
-      );
-      this.fs.copy(
-        this.templatePath('gitignore'),
-        this.destinationPath('.gitignore')
-      );
-    },
+  // Meta Files
+    this.fs.copy(
+      this.templatePath('LICENSE'),
+      this.destinationPath('LICENSE')
+    );
+    this.fs.copy(
+      this.templatePath('nodemon.json'),
+      this.destinationPath('nodemon.json')
+    );
+    this.fs.copy(
+      this.templatePath('package.json'),
+      this.destinationPath('package.json')
+    );
+    this.fs.copy(
+      this.templatePath('README.md'),
+      this.destinationPath('README.md')
+    );
+    this.fs.copy(
+      this.templatePath('yarn.lock'),
+      this.destinationPath('yarn.lock')
+    );
 
-    metaFiles: function () {
-      this.fs.copy(
-        this.templatePath('LICENSE'),
-        this.destinationPath('LICENSE')
-      );
-      this.fs.copy(
-        this.templatePath('nodemon.json'),
-        this.destinationPath('nodemon.json')
-      );
-      this.fs.copy(
-        this.templatePath('package.json'),
-        this.destinationPath('package.json')
-      );
-      this.fs.copy(
-        this.templatePath('README.md'),
-        this.destinationPath('README.md')
-      );
-      this.fs.copy(
-        this.templatePath('yarn.lock'),
-        this.destinationPath('yarn.lock')
-      );
-    },
+  // Root JS files
+    this.fs.copy(
+      this.templatePath('config.js'),
+      this.destinationPath('config.js')
+    );
+    this.fs.copy(
+      this.templatePath('index.js'),
+      this.destinationPath('index.js')
+    );
 
-    rootJsFiles: function () {
-      this.fs.copy(
-        this.templatePath('config.js'),
-        this.destinationPath('config.js')
-      );
-      this.fs.copy(
-        this.templatePath('index.js'),
-        this.destinationPath('index.js')
-      );
+    this.fs.copy(
+      this.templatePath('manifest.js'),
+      this.destinationPath('manifest.js')
+    );
 
-      this.fs.copy(
-        this.templatePath('manifest.js'),
-        this.destinationPath('manifest.js')
-      );
+    this.fs.copy(
+      this.templatePath('server.js'),
+      this.destinationPath('server.js')
+    );
 
-      this.fs.copy(
-        this.templatePath('server.js'),
-        this.destinationPath('server.js')
-      );
-    },
+  // JSON templates
+    this.fs.copy(
+      this.templatePath('json-templates/gitkeep'),
+      this.destinationPath('json-templates/.gitkeep')
+    );
 
-    jsonTemplates: function () {
-      this.fs.copy(
-        this.templatePath('json-templates/gitkeep'),
-        this.destinationPath('json-templates/.gitkeep')
-      );
-    },
+  // Server files
+    this.fs.copy(
+      this.templatePath('server'),
+      this.destinationPath('server')
+    );
 
-    serverFiles: function () {
-      this.fs.copy(
-        this.templatePath('server'),
-        this.destinationPath('server')
-      );
-    },
+  // Test files
+    this.fs.copy(
+      this.templatePath('test'),
+      this.destinationPath('test')
+    );
+  }
 
-    testFiles: function () {
-      this.fs.copy(
-        this.templatePath('test'),
-        this.destinationPath('test')
-      );
-    }
-
-  },
-
-  install: function () {
-    var that = this;
+  install() {
     this.installDependencies({
       npm: false,
       bower: false,
       yarn: true,
-      callback: function (error) {
+      callback: error => {
         if (error) {
-          that.log('… or alternatively run ' +
+          this.log('… or alternatively run ' +
             chalk.yellow('npm install') +
             ' instead.');
         } else {
-          that.log(yosay(
-            'That’s it. Feel free to fire up the server with ' +
-              chalk.green('npm run start:dev') +
-              ' or use our subgenerator to create endpoints.'
-          ));
+          this.log(yosay(`
+            That’s it. Feel free to fire up the server with ${chalk.green('npm run start:dev')}
+              or use our subgenerator to create endpoints.
+          `));
         }
       }
     });
   }
-});
+};

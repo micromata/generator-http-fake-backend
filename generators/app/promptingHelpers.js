@@ -1,9 +1,9 @@
-var chalk = require('chalk');
-var helper = {};
+const chalk = require('chalk');
+const helper = {};
 
 helper.validateApiPrefix = function (value) {
-  var check = value.match(/^\/|\/$/g);
-  var returnValue;
+  const check = value.match(/^\/|\/$/g);
+  let returnValue;
 
   if (check === null) {
     returnValue = chalk.red('API prefix has to begin with a `/`.');

@@ -1,34 +1,31 @@
 'use strict';
-var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
-var yosay = require('yosay');
-var superb = require('superb');
-var titleCase = require('title-case');
-var helper = require('./promptingHelpers');
+const Generator = require('yeoman-generator');
+const chalk = require('chalk');
+const yosay = require('yosay');
+const superb = require('superb');
+const titleCase = require('title-case');
+const helper = require('./promptingHelpers');
 
-module.exports = yeoman.extend({
+module.exports = class extends Generator {
 
-  prompting: function () {
-    var that = this;
-    var done = that.async();
+  prompting() {
+    const done = this.async();
 
     // Have Yeoman greet the user.
-    that.log(yosay(
-      titleCase(superb()) + ', let’s create an endpoint …'
-    ));
+    this.log(yosay(`${titleCase(superb())}, let’s create an endpoint …`));
 
-    that.endpoint = {
+    this.endpoint = {
       name: null,
       urls: []
     };
 
-    var prompts = [
+    const prompts = [
       {
         type: 'input',
         name: 'endpointName',
         message: 'What should be the name of the endpoint?',
-        when: function () {
-          return !that.endpoint.urls.length;
+        when: () => {
+          return !this.endpoint.urls.length;
         },
         validate: helper.validateEndpoint
       },
@@ -57,7 +54,7 @@ module.exports = yeoman.extend({
         name: 'response',
         message: 'Please enter the name of your JSON file',
         default: 'foo.json',
-        when: function (answers) {
+        when(answers) {
           return answers.responseType === 'json';
         },
         validate: helper.validateJson
@@ -66,7 +63,7 @@ module.exports = yeoman.extend({
         name: 'response',
         message: 'Please enter a JavaScript object literal or array',
         default: '{ status: \'ok\' }',
-        when: function (answers) {
+        when(answers) {
           return answers.responseType === 'object';
         },
         filter: helper.filterJsObject,
@@ -76,7 +73,7 @@ module.exports = yeoman.extend({
         name: 'statusCode',
         message: 'Please enter a valid HTTP error status code',
         default: '400',
-        when: function (answers) {
+        when(answers) {
           return answers.responseType === 'error';
         },
         validate: helper.validateErrorStatusCode
@@ -85,7 +82,7 @@ module.exports = yeoman.extend({
         name: 'statusCode',
         message: 'Please enter a valid HTTP status code',
         default: '200',
-        when: function (answers) {
+        when(answers) {
           return answers.responseType === 'json' || answers.responseType === 'object';
         },
         validate: helper.validateStatusCode
@@ -97,10 +94,10 @@ module.exports = yeoman.extend({
       }
     ];
 
-    prompting(that);
+    prompting(this);
 
     function prompting(that) {
-      that.prompt(prompts).then(function (props) {
+      that.prompt(prompts).then(props => {
         that.props = props;
 
         if (!that.endpoint.name) {
@@ -125,11 +122,9 @@ module.exports = yeoman.extend({
         }
       });
     }
-  },
+  }
 
-  writing: function () {
-    var that = this;
-
+  writing() {
     this.fs.copyTpl(
       this.templatePath('_endpoint.js'),
       this.destinationPath('server/api/' + this.endpoint.name + '.js'), {
@@ -137,21 +132,19 @@ module.exports = yeoman.extend({
       }
     );
 
-    this.endpoint.urls.forEach(function (url) {
+    this.endpoint.urls.forEach(url => {
       if (url.requests[0].responseType === 'json') {
-        that.fs.copy(
-          that.templatePath('response.json'),
-          that.destinationPath('json-templates/' + url.requests[0].response)
+        this.fs.copy(
+          this.templatePath('response.json'),
+          this.destinationPath('json-templates/' + url.requests[0].response)
         );
       }
     });
-  },
-
-  end: function () {
-    this.log(yosay(
-      'That’s it. Feel free to fire up the server with ' +
-        chalk.green('`npm run start:dev`') +
-        '.'
-    ));
   }
-});
+
+  end() {
+    this.log(yosay(`
+      That’s it. Feel free to fire up the server with ${chalk.green('npm run start:dev')}
+    `));
+  }
+};
