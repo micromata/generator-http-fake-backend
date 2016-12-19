@@ -5,8 +5,9 @@ var yosay = require('yosay');
 var superb = require('superb');
 var helper = require('./promptingHelpers');
 
-module.exports = yeoman.Base.extend({
+module.exports = yeoman.extend({
   prompting: function () {
+    console.log('this', this.dir);
     var done = this.async();
 
     // Have Yeoman greet the user.
@@ -112,21 +113,21 @@ module.exports = yeoman.Base.extend({
     },
 
     jsonTemplates: function () {
-      this.directory(
-        this.templatePath('json-templates'),
-        this.destinationPath('json-templates')
+      this.fs.copy(
+        this.templatePath('json-templates/gitkeep'),
+        this.destinationPath('json-templates/.gitkeep')
       );
     },
 
     serverFiles: function () {
-      this.directory(
+      this.fs.copy(
         this.templatePath('server'),
         this.destinationPath('server')
       );
     },
 
     testFiles: function () {
-      this.directory(
+      this.fs.copy(
         this.templatePath('test'),
         this.destinationPath('test')
       );
