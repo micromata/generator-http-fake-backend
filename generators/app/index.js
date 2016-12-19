@@ -138,14 +138,21 @@ module.exports = yeoman.extend({
   install: function () {
     var that = this;
     this.installDependencies({
-      npm: true,
+      npm: false,
       bower: false,
-      callback: function () {
-        that.log(yosay(
-          'That’s it. Feel free to fire up the server with ' +
-            chalk.green('`npm run start:dev`') +
-            'or use our subgenerator to create endpoints.'
-        ));
+      yarn: true,
+      callback: function (error) {
+        if (error) {
+          that.log('… or alternatively run ' +
+            chalk.yellow('npm install') +
+            ' instead.');
+        } else {
+          that.log(yosay(
+            'That’s it. Feel free to fire up the server with ' +
+              chalk.green('npm run start:dev') +
+              ' or use our subgenerator to create endpoints.'
+          ));
+        }
       }
     });
   }

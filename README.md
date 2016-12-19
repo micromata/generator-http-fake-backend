@@ -31,6 +31,11 @@ This readme only contains the gist of it and mainly describes Yeoman specific th
 First, install [Yeoman](http://yeoman.io) and `generator-http-fake-backend using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
 
 ```bash
+# via Yarn
+yarn global add yo
+yarn global add generator-http-fake-backend
+
+# via npm
 npm install -g yo
 npm install -g generator-http-fake-backend
 ```
@@ -40,8 +45,6 @@ Then generate your fake backend server:
 ```bash
 yo http-fake-backend
 ```
- 
-*Hint: Use `yo http-fake-backend --skip-install && yarn install` if you have installed [Yarn](https://yarnpkg.com/) … and yup, the generated project has a lock file* :sparkling_heart:
 
 ## Generating endpoints
 
@@ -77,5 +80,3 @@ MIT © [Micromata](www.micromata.de)
 
 Please be aware of the licenses of the components we use in this project.
 Everything else that has been developed by the contributions to this project is under [MIT License](LICENSE).
-
-
