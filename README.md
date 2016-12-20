@@ -72,7 +72,7 @@ Yeoman has a heart of gold. He’s a person with feelings and opinions, but he�
 
 ## Related
 
-* [http-fake-backend](https://github.com/micromata/http-fake-backend) – Static version of the hapi server that this genereator creates.
+* [http-fake-backend](https://github.com/micromata/http-fake-backend) – Static version of the hapi server that this generator creates.
 
 ## License
 
