@@ -117,7 +117,6 @@ module.exports = class extends Generator {
         if (props.anotherUrl) {
           prompting(that);
         } else {
-          // console.log('Your endpoint:', JSON.stringify(that.endpoint));
           done();
         }
       });

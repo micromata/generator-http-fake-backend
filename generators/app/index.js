@@ -7,7 +7,6 @@ const helper = require('./promptingHelpers');
 
 module.exports = class extends Generator {
   prompting() {
-    console.log('this', this.dir);
     const done = this.async();
 
     // Have Yeoman greet the user.
