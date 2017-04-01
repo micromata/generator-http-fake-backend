@@ -15,76 +15,78 @@ describe('generator-http-fake-backend → server', () => {
       .on('end', done);
   });
 
-  it('should create dot files', () => {
-    assert.file([
-      '.editorconfig',
-      '.env',
-      '.eslintrc',
-      '.gitattributes',
-      '.gitignore'
-    ]);
-  });
-
-  describe('.env', () => {
-    it('should contain the prompted port number', () => {
-      assert.fileContent('.env', /SERVER_PORT=8081/);
+  describe('file creation', () => {
+    it('should create dot files', () => {
+      assert.file([
+        '.editorconfig',
+        '.env',
+        '.eslintrc',
+        '.gitattributes',
+        '.gitignore'
+      ]);
     });
-    it('should contain the prompted api url prefix', () => {
-      assert.fileContent('.env', /API_PREFIX=\/api/);
+
+    describe('.env', () => {
+      it('should contain the prompted port number', () => {
+        assert.fileContent('.env', /SERVER_PORT=8081/);
+      });
+      it('should contain the prompted api url prefix', () => {
+        assert.fileContent('.env', /API_PREFIX=\/api/);
+      });
     });
-  });
 
-  it('should create meta files', () => {
-    assert.file([
-      'LICENSE',
-      'nodemon.json',
-      'package.json',
-      'README.md',
-      'yarn.lock'
-    ]);
-  });
+    it('should create meta files', () => {
+      assert.file([
+        'LICENSE',
+        'nodemon.json',
+        'package.json',
+        'README.md',
+        'yarn.lock'
+      ]);
+    });
 
-  it('should create JS files in root directory', () => {
-    assert.file([
-      'config.js',
-      'index.js',
-      'manifest.js',
-      'server.js'
-    ]);
-  });
+    it('should create JS files in root directory', () => {
+      assert.file([
+        'config.js',
+        'index.js',
+        'manifest.js',
+        'server.js'
+      ]);
+    });
 
-  it('should create json-templates directory', () => {
-    assert.file([
-      'json-templates/.gitkeep'
-    ]);
-  });
+    it('should create json-templates directory', () => {
+      assert.file([
+        'json-templates/.gitkeep'
+      ]);
+    });
 
-  it('should create server files', () => {
-    assert.file([
-      'server/api/setup/setup.js',
-      'server/web/index.js',
-      'server/web/public/assets/css/styles.css',
-      'server/web/public.js',
-      'server/web/views/helpers/json.js',
-      'server/web/views/helpers/methods.js',
-      'server/web/views/helpers/removeCurlyBraces.js',
-      'server/web/views/index.hbs',
-      'server/web/views/layout/layout.hbs',
-      'server/web/views/partials/footer.hbs',
-      'server/web/views/partials/header.hbs'
-    ]);
-  });
+    it('should create server files', () => {
+      assert.file([
+        'server/api/setup/setup.js',
+        'server/web/index.js',
+        'server/web/public/assets/css/styles.css',
+        'server/web/public.js',
+        'server/web/views/helpers/json.js',
+        'server/web/views/helpers/methods.js',
+        'server/web/views/helpers/removeCurlyBraces.js',
+        'server/web/views/index.hbs',
+        'server/web/views/layout/layout.hbs',
+        'server/web/views/partials/footer.hbs',
+        'server/web/views/partials/header.hbs'
+      ]);
+    });
 
-  it('should create test files', () => {
-    assert.file([
-      'test/config.js',
-      'test/index.js',
-      'test/manifest.js',
-      'test/server/api/endpoint.js',
-      'test/server/api/fakeStatusCode.js',
-      'test/server/api/fixtures/response.json',
-      'test/server/web/index.js'
-    ]);
+    it('should create test files', () => {
+      assert.file([
+        'test/config.js',
+        'test/index.js',
+        'test/manifest.js',
+        'test/server/api/endpoint.js',
+        'test/server/api/fakeStatusCode.js',
+        'test/server/api/fixtures/response.json',
+        'test/server/web/index.js'
+      ]);
+    });
   });
 });
 
