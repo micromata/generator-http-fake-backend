@@ -65,7 +65,7 @@ module.exports = class extends Generator {
       this.destinationPath('.gitignore')
     );
 
-  // Meta Files
+    // Meta Files
     this.fs.copy(
       this.templatePath('LICENSE'),
       this.destinationPath('LICENSE')
@@ -87,7 +87,7 @@ module.exports = class extends Generator {
       this.destinationPath('yarn.lock')
     );
 
-  // Root JS files
+    // Root JS files
     this.fs.copy(
       this.templatePath('config.js'),
       this.destinationPath('config.js')
@@ -107,19 +107,19 @@ module.exports = class extends Generator {
       this.destinationPath('server.js')
     );
 
-  // JSON templates
+    // JSON templates
     this.fs.copy(
       this.templatePath('json-templates/gitkeep'),
       this.destinationPath('json-templates/.gitkeep')
     );
 
-  // Server files
+    // Server files
     this.fs.copy(
       this.templatePath('server'),
       this.destinationPath('server')
     );
 
-  // Test files
+    // Test files
     this.fs.copy(
       this.templatePath('test'),
       this.destinationPath('test')

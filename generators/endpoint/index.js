@@ -7,7 +7,6 @@ const titleCase = require('title-case');
 const helper = require('./promptingHelpers');
 
 module.exports = class extends Generator {
-
   prompting() {
     const done = this.async();
 
