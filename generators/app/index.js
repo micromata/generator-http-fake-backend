@@ -3,6 +3,7 @@ const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
 const superb = require('superb');
+const commandExists = require('command-exists').sync;
 const helper = require('./promptingHelpers');
 
 module.exports = class extends Generator {
@@ -127,22 +128,18 @@ module.exports = class extends Generator {
   }
 
   install() {
+    const hasYarn = commandExists('yarn');
     this.installDependencies({
-      npm: false,
+      npm: !hasYarn,
       bower: false,
-      yarn: true,
-      callback: error => {
-        if (error) {
-          this.log('… or alternatively run ' +
-            chalk.yellow('npm install') +
-            ' instead.');
-        } else {
-          this.log(yosay(`
-            That’s it. Feel free to fire up the server with ${chalk.green('npm run start:dev')}
-              or use our subgenerator to create endpoints.
-          `));
-        }
-      }
+      yarn: hasYarn
     });
+  }
+
+  end() {
+    this.log(yosay(`
+      That’s it. Feel free to fire up the server with ${chalk.green('npm run start:dev')}
+        or use our subgenerator to create endpoints: ${chalk.yellow('yo http-fake-backend:endpoint')}
+    `, {maxLength: 40}));
   }
 };
