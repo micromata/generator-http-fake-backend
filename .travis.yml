@@ -1,8 +1,10 @@
 language: node_js
 node_js:
-  - v7
-  - v6
-  - v4
+  - 6
+  - 7
+  - node
+after_script:
+  - npm run coveralls
 addons:
   code_climate:
     repo_token: 1df4f6b88354e9ddfb84b7b06388d78ed12fb808747bca045225cfea3e2fb377
