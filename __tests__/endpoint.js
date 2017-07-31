@@ -6,7 +6,7 @@ const helper = require('../generators/endpoint/promptingHelpers');
 const chalk = require('chalk');
 
 describe('generator-http-fake-backend → endpoint', () => {
-  before(() => {
+  beforeAll(() => {
     return helpers.run(path.join(__dirname, '../generators/endpoint'))
       .withOptions({someOption: true})
       .withPrompts({
@@ -46,7 +46,7 @@ describe('generator-http-fake-backend → endpoint', () => {
 });
 
 describe('generator-http-fake-backend → endpoint → JSON file', () => {
-  before(() => {
+  beforeAll(() => {
     return helpers.run(path.join(__dirname, '../generators/endpoint'))
       .withOptions({someOption: true})
       .withPrompts({

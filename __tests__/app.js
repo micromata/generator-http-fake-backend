@@ -6,7 +6,7 @@ const helper = require('../generators/app/promptingHelpers');
 const chalk = require('chalk');
 
 describe('generator-http-fake-backend → server', () => {
-  before(done => {
+  beforeAll(done => {
     helpers.run(path.join(__dirname, '../generators/app'))
       .withPrompts({
         serverPort: 8081,
