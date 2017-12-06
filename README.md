@@ -28,7 +28,7 @@ This readme only contains the gist of it and mainly describes Yeoman specific th
 
 ## Installation
 
-First, install [Yeoman](http://yeoman.io) and `generator-http-fake-backend using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
+First, install [Yeoman](http://yeoman.io) and `generator-http-fake-backend` using npm (we assume you have pre-installed [Node.js](https://nodejs.org/) 6.0.0 or greater).
 
 ```bash
 # via Yarn
