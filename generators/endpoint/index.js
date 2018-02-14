@@ -134,7 +134,7 @@ module.exports = class extends Generator {
       if (url.requests[0].responseType === 'json') {
         this.fs.copy(
           this.templatePath('response.json'),
-          this.destinationPath('json-templates/' + url.requests[0].response)
+          this.destinationPath('response-files/' + url.requests[0].response)
         );
       }
     });

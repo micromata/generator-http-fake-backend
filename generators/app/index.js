@@ -104,10 +104,10 @@ module.exports = class extends Generator {
       this.destinationPath('server.js')
     );
 
-    // JSON templates
+    // Directory for response files
     this.fs.copy(
-      this.templatePath('json-templates/gitkeep'),
-      this.destinationPath('json-templates/.gitkeep')
+      this.templatePath('response-files/gitkeep'),
+      this.destinationPath('response-files/.gitkeep')
     );
 
     // Server files

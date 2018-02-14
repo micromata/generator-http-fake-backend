@@ -62,7 +62,7 @@ describe('generator-http-fake-backend → endpoint → JSON file', () => {
 
   it('should create foo.json', () => {
     assert.file([
-      'json-templates/foo.json'
+      'response-files/foo.json'
     ]);
   });
 
@@ -74,7 +74,7 @@ describe('generator-http-fake-backend → endpoint → JSON file', () => {
 
   describe('endpoint.js', () => {
     it('should contain the prompted response', () => {
-      assert.fileContent('server/api/endpoint.js', /response: '\/json-templates\/foo.json'/);
+      assert.fileContent('server/api/endpoint.js', /response: '\/response-files\/foo.json'/);
     });
 
     it('should contain the correct statuscode', () => {

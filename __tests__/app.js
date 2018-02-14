@@ -53,9 +53,9 @@ describe('generator-http-fake-backend → server', () => {
       ]);
     });
 
-    it('should create json-templates directory', () => {
+    it('should create response-files directory', () => {
       assert.file([
-        'json-templates/.gitkeep'
+        'response-files/.gitkeep'
       ]);
     });
 
