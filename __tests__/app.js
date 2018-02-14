@@ -85,7 +85,11 @@ describe('generator-http-fake-backend → server', () => {
         'test/manifest.js',
         'test/server/api/endpoint.js',
         'test/server/api/fakeStatusCode.js',
+        'test/server/api/fileTypes.js',
+        'test/server/api/fixtures/example.pdf',
+        'test/server/api/fixtures/response.html',
         'test/server/api/fixtures/response.json',
+        'test/server/api/fixtures/response.txt',
         'test/server/web/index.js'
       ]);
     });
