@@ -1,6 +1,6 @@
 'use strict';
 
-const SetupEndpoint = require('./setup/setup.js');
+const SetupEndpoint = require('./setup/');
 
 module.exports = SetupEndpoint({
     name: '<%= endpoint.name %>',

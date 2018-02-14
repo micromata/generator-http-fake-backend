@@ -61,7 +61,10 @@ describe('generator-http-fake-backend → server', () => {
 
     it('should create server files', () => {
       assert.file([
-        'server/api/setup/setup.js',
+        'server/api/setup/lib/getContentDisposition.js',
+        'server/api/setup/index.js',
+        'server/api/setup/supportedMethod.js',
+        'server/api/setup/unsupportedMethods.js',
         'server/web/index.js',
         'server/web/public/assets/css/styles.css',
         'server/web/public.js',
