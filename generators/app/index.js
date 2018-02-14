@@ -54,10 +54,6 @@ module.exports = class extends Generator {
       }
     );
     this.fs.copy(
-      this.templatePath('eslintrc'),
-      this.destinationPath('.eslintrc')
-    );
-    this.fs.copy(
       this.templatePath('gitattributes'),
       this.destinationPath('.gitattributes')
     );

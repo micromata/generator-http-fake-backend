@@ -20,7 +20,6 @@ describe('generator-http-fake-backend → server', () => {
       assert.file([
         '.editorconfig',
         '.env',
-        '.eslintrc',
         '.gitattributes',
         '.gitignore'
       ]);
