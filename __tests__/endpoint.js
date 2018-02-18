@@ -13,7 +13,7 @@ describe('generator-http-fake-backend → endpoint', () => {
         endpointName: 'endpoint',
         params: '/bar',
         method: 'GET',
-        responseType: 'object',
+        responseType: 'objectLiteral',
         response: '{ status: \'ok\' }',
         anotherUrl: false
       })
@@ -52,7 +52,8 @@ describe('generator-http-fake-backend → endpoint → JSON file', () => {
       .withPrompts({
         endpointName: 'endpoint',
         method: 'GET',
-        responseType: 'json',
+        responseType: 'fileContent',
+        contentType: 'json',
         response: 'foo.json',
         statusCode: 204,
         anotherUrl: false
@@ -90,8 +91,9 @@ describe('generator-http-fake-backend → endpoint → JSON file', () => {
 describe('generator-http-fake-backend → endpoint → prompting helpers', () => {
   describe('→ filterResponseType()', () => {
     it('should return correct outputs', () => {
-      assert.equal(helper.filterResponseType('The content of a JSON file'), 'json');
-      assert.equal(helper.filterResponseType('A JavaScript object literal'), 'object');
+      assert.equal(helper.filterResponseType('The content of a file'), 'fileContent');
+      assert.equal(helper.filterResponseType('A file via Content-Disposition: attachment'), 'fileAttachment');
+      assert.equal(helper.filterResponseType('A JavaScript object literal as JSON'), 'objectLiteral');
       assert.equal(helper.filterResponseType('An error object'), 'error');
     });
   });
