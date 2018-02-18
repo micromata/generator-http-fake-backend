@@ -31,22 +31,22 @@
     "mock"
   ],
   "dependencies": {
-    "chalk": "2.3.0",
+    "chalk": "2.3.1",
     "command-exists": "^1.2.2",
-    "nsp": "^3.1.0",
+    "nsp": "^3.2.1",
     "superb": "2.0.0",
     "title-case": "^2.1.1",
-    "yeoman-generator": "^2.0.1",
+    "yeoman-generator": "^2.0.2",
     "yosay": "^2.0.1"
   },
   "devDependencies": {
     "codeclimate-test-reporter": "^0.5.0",
     "coveralls": "^3.0.0",
-    "eslint": "^4.12.1",
-    "eslint-config-xo-space": "^0.17.0",
-    "jest": "^21.2.1",
-    "jest-cli": "^21.2.1",
-    "standard-version": "^4.2.0",
+    "eslint": "^4.18.0",
+    "eslint-config-xo-space": "^0.18.0",
+    "jest": "^22.3.0",
+    "jest-cli": "^22.3.0",
+    "standard-version": "^4.3.0",
     "yeoman-assert": "^3.1.0",
     "yeoman-test": "1.7.0"
   },
