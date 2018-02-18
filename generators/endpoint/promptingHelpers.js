@@ -2,14 +2,40 @@ const chalk = require('chalk');
 const helper = {};
 
 helper.filterResponseType = function (value) {
-  if (value === 'The content of a JSON file') {
-    value = 'json';
-  } else if (value === 'An error object') {
-    value = 'error';
-  } else {
-    value = 'object';
+  let responseType;
+  switch (value) {
+    case 'The content of a file':
+      responseType = 'fileContent';
+      break;
+    case 'A file via Content-Disposition: attachment':
+      responseType = 'fileAttachment';
+      break;
+    case 'A JavaScript object literal as JSON':
+      responseType = 'objectLiteral';
+      break;
+    case 'An error object':
+      responseType = 'error';
+      break;
+    // No Default
   }
-  return value;
+  return responseType;
+};
+
+helper.filterContentType = function (value) {
+  let contentType;
+  switch (value) {
+    case 'application/json':
+      contentType = 'json';
+      break;
+    case 'text/plain':
+      contentType = 'txt';
+      break;
+    case 'text/html':
+      contentType = 'html';
+      break;
+    // No Default
+  }
+  return contentType;
 };
 
 helper.validateJsObject = function (value) {
@@ -25,6 +51,36 @@ helper.validateJsObject = function (value) {
 helper.validateJson = function (value) {
   let returnvalue = chalk.red('Please enter valid filename (*.json)');
   const fileExt = value.match(/\w\.json$/);
+  const validChars = value.match(/[^a-zA-Z0-9(),!.~$&'\-_*+;=:@]+/g);
+  if (fileExt && !validChars) {
+    returnvalue = true;
+  }
+  return returnvalue;
+};
+
+helper.validateText = function (value) {
+  let returnvalue = chalk.red('Please enter valid filename (*.txt)');
+  const fileExt = value.match(/\w\.txt$/);
+  const validChars = value.match(/[^a-zA-Z0-9(),!.~$&'\-_*+;=:@]+/g);
+  if (fileExt && !validChars) {
+    returnvalue = true;
+  }
+  return returnvalue;
+};
+
+helper.validateHtml = function (value) {
+  let returnvalue = chalk.red('Please enter valid filename (*.html)');
+  const fileExt = value.match(/\w\.html$/);
+  const validChars = value.match(/[^a-zA-Z0-9(),!.~$&'\-_*+;=:@]+/g);
+  if (fileExt && !validChars) {
+    returnvalue = true;
+  }
+  return returnvalue;
+};
+
+helper.validateFile = function (value) {
+  let returnvalue = chalk.red('Please enter valid filename');
+  const fileExt = value.match(/\w\.\w{2,4}$/);
   const validChars = value.match(/[^a-zA-Z0-9(),!.~$&'\-_*+;=:@]+/g);
   if (fileExt && !validChars) {
     returnvalue = true;
