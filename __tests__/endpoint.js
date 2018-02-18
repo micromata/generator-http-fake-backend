@@ -73,9 +73,23 @@ describe('generator-http-fake-backend → endpoint → JSON file', () => {
     ]);
   });
 
+  describe('foo.json', () => {
+    it('should contain the content off the template', () => {
+      assert.fileContent('response-files/foo.json', /{ "success": true }/);
+    });
+  });
+
   describe('endpoint.js', () => {
     it('should contain the prompted response', () => {
       assert.fileContent('server/api/endpoint.js', /response: '\/response-files\/foo.json'/);
+    });
+
+    it('should not have a mimeType key ', () => {
+      assert.noFileContent('server/api/endpoint.js', /mimeType:/);
+    });
+
+    it('should not have a sendFile key ', () => {
+      assert.noFileContent('server/api/endpoint.js', /sendFile:/);
     });
 
     it('should contain the correct statuscode', () => {
@@ -84,6 +98,140 @@ describe('generator-http-fake-backend → endpoint → JSON file', () => {
 
     it('should not contain the params key', () => {
       assert.noFileContent('server/api/endpoint.js', /params/);
+    });
+  });
+});
+
+describe('generator-http-fake-backend → endpoint → Text file', () => {
+  beforeAll(() => {
+    return helpers.run(path.join(__dirname, '../generators/endpoint'))
+      .withOptions({someOption: true})
+      .withPrompts({
+        endpointName: 'endpoint',
+        method: 'GET',
+        responseType: 'fileContent',
+        contentType: 'txt',
+        response: 'foo.txt',
+        statusCode: 204,
+        anotherUrl: false
+      })
+      .toPromise();
+  });
+
+  it('should create foo.txt', () => {
+    assert.file([
+      'response-files/foo.txt'
+    ]);
+  });
+
+  it('should create endpoint.js', () => {
+    assert.file([
+      'server/api/endpoint.js'
+    ]);
+  });
+
+  describe('foo.txt', () => {
+    it('should contain the content off the template', () => {
+      assert.fileContent('response-files/foo.txt', /Success/);
+    });
+  });
+
+  describe('endpoint.js', () => {
+    it('should contain the prompted response', () => {
+      assert.fileContent('server/api/endpoint.js', /response: '\/response-files\/foo.txt'/);
+    });
+
+    it('should have the correct mimeType', () => {
+      assert.fileContent('server/api/endpoint.js', /mimeType: 'text\/plain'/);
+    });
+
+    it('should not have a sendFile key ', () => {
+      assert.noFileContent('server/api/endpoint.js', /sendFile:/);
+    });
+  });
+});
+
+describe('generator-http-fake-backend → endpoint → HTML file', () => {
+  beforeAll(() => {
+    return helpers.run(path.join(__dirname, '../generators/endpoint'))
+      .withOptions({someOption: true})
+      .withPrompts({
+        endpointName: 'endpoint',
+        method: 'GET',
+        responseType: 'fileContent',
+        contentType: 'html',
+        response: 'foo.html',
+        statusCode: 204,
+        anotherUrl: false
+      })
+      .toPromise();
+  });
+
+  it('should create foo.html', () => {
+    assert.file([
+      'response-files/foo.html'
+    ]);
+  });
+
+  it('should create endpoint.js', () => {
+    assert.file([
+      'server/api/endpoint.js'
+    ]);
+  });
+
+  describe('foo.html', () => {
+    it('should contain the content off the template', () => {
+      assert.fileContent('response-files/foo.html', /<a href="https:\/\/github\.com">GitHub<\/a>/);
+    });
+  });
+
+  describe('endpoint.js', () => {
+    it('should contain the prompted response', () => {
+      assert.fileContent('server/api/endpoint.js', /response: '\/response-files\/foo.html'/);
+    });
+
+    it('should have the correct mimeType', () => {
+      assert.fileContent('server/api/endpoint.js', /mimeType: 'text\/html'/);
+    });
+
+    it('should not have a sendFile key ', () => {
+      assert.noFileContent('server/api/endpoint.js', /sendFile:/);
+    });
+  });
+});
+
+describe('generator-http-fake-backend → endpoint → send file', () => {
+  beforeAll(() => {
+    return helpers.run(path.join(__dirname, '../generators/endpoint'))
+      .withOptions({someOption: true})
+      .withPrompts({
+        endpointName: 'endpoint',
+        method: 'GET',
+        responseType: 'fileAttachment',
+        response: 'foo.pdf',
+        statusCode: 204,
+        anotherUrl: false
+      })
+      .toPromise();
+  });
+
+  it('should create endpoint.js', () => {
+    assert.file([
+      'server/api/endpoint.js'
+    ]);
+  });
+
+  describe('endpoint.js', () => {
+    it('should contain the prompted response', () => {
+      assert.fileContent('server/api/endpoint.js', /response: '\/response-files\/foo.pdf'/);
+    });
+
+    it('should not have a mimeType key', () => {
+      assert.noFileContent('server/api/endpoint.js', /mimeType: 'text\/html'/);
+    });
+
+    it('should have a sendFile key ', () => {
+      assert.fileContent('server/api/endpoint.js', /sendFile: true/);
     });
   });
 });
