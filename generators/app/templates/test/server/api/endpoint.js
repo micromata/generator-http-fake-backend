@@ -4,7 +4,7 @@ const Lab = require('lab');
 const Code = require('code');
 const Config = require('../../../config');
 const Hapi = require('hapi');
-const SetupEndpoint = require('../../../server/api/setup/setup.js');
+const SetupEndpoint = require('../../../server/api/setup/');
 
 const apiUrlPrefix = Config.get('/apiUrlPrefix');
 
@@ -118,7 +118,8 @@ lab.experiment('Setup endpoints', () => {
             Code.expect(response.statusCode).to.equal(405);
             Code.expect(response.result).to.equal({
                 statusCode: 405,
-                error: 'Method Not Allowed'
+                error: 'Method Not Allowed',
+                message: 'Method Not Allowed'
             });
 
             done();
@@ -135,7 +136,7 @@ lab.experiment('Setup endpoints', () => {
         server.inject(request, (response) => {
 
             Code.expect(response.statusCode).to.equal(200);
-            Code.expect(response.result).to.equal({ response: 'Yeah' });
+            Code.expect(JSON.parse(response.result)).to.equal({ response: '🐷' });
 
             done();
         });
@@ -167,7 +168,7 @@ lab.experiment('Setup endpoints', () => {
         server.inject(request, (response) => {
 
             Code.expect(response.statusCode).to.equal(200);
-            Code.expect(response.result).to.equal({ response: 'Yeah' });
+            Code.expect(JSON.parse(response.result)).to.equal({ response: '🐷' });
 
             done();
         });
@@ -183,7 +184,7 @@ lab.experiment('Setup endpoints', () => {
         server.inject(request, (response) => {
 
             Code.expect(response.statusCode).to.equal(200);
-            Code.expect(response.result).to.equal({ response: 'Yeah' });
+            Code.expect(JSON.parse(response.result)).to.equal({ response: '🐷' });
 
             done();
         });
@@ -215,7 +216,7 @@ lab.experiment('Setup endpoints', () => {
         server.inject(request, (response) => {
 
             Code.expect(response.statusCode).to.equal(200);
-            Code.expect(response.result).to.equal({ response: 'Yeah' });
+            Code.expect(JSON.parse(response.result)).to.equal({ response: '🐷' });
 
             done();
         });
@@ -255,7 +256,8 @@ lab.experiment('Setup endpoints', () => {
             Code.expect(response.statusCode).to.equal(405);
             Code.expect(response.result).to.equal({
                 statusCode: 405,
-                error: 'Method Not Allowed'
+                error: 'Method Not Allowed',
+                message: 'Method Not Allowed'
             });
 
             done();

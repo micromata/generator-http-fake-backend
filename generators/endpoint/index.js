@@ -43,30 +43,69 @@ module.exports = class extends Generator {
         name: 'responseType',
         message: 'What would you like to return?',
         choices: [
-          'The content of a JSON file',
-          'A JavaScript object literal',
+          'The content of a file',
+          'A JavaScript object literal as JSON',
+          'A file via Content-Disposition: attachment',
           'An error object'
         ],
         filter: helper.filterResponseType
       }, {
+        type: 'list',
+        name: 'contentType',
+        message: 'Which content type should it have?',
+        choices: [
+          'application/json',
+          'text/plain',
+          'text/html'
+        ],
+        filter: helper.filterContentType,
+        when(answers) {
+          return answers.responseType === 'fileContent';
+        }
+      }, {
         type: 'input',
         name: 'response',
-        message: 'Please enter the name of your JSON file',
-        default: 'foo.json',
+        message: 'Please enter the name of the JSON file',
+        default: 'your-filename.json',
         when(answers) {
-          return answers.responseType === 'json';
+          return answers.contentType === 'json';
         },
         validate: helper.validateJson
+      }, {
+        type: 'input',
+        name: 'response',
+        message: 'Please enter the name of the text file',
+        default: 'your-filename.txt',
+        when(answers) {
+          return answers.contentType === 'txt';
+        },
+        validate: helper.validateText
+      }, {
+        type: 'input',
+        name: 'response',
+        message: 'Please enter the name of the HTML file',
+        default: 'your-filename.html',
+        when(answers) {
+          return answers.contentType === 'html';
+        },
+        validate: helper.validateHtml
       }, {
         type: 'input',
         name: 'response',
         message: 'Please enter a JavaScript object literal or array',
         default: '{ status: \'ok\' }',
         when(answers) {
-          return answers.responseType === 'object';
+          return answers.responseType === 'objectLiteral';
         },
-        filter: helper.filterJsObject,
         validate: helper.validateJsObject
+      }, {
+        type: 'input',
+        name: 'response',
+        message: 'Please enter the name of the file',
+        when(answers) {
+          return answers.responseType === 'fileAttachment';
+        },
+        validate: helper.validateFile
       }, {
         type: 'input',
         name: 'statusCode',
@@ -82,7 +121,7 @@ module.exports = class extends Generator {
         message: 'Please enter a valid HTTP status code',
         default: '200',
         when(answers) {
-          return answers.responseType === 'json' || answers.responseType === 'object';
+          return answers.responseType !== 'error';
         },
         validate: helper.validateStatusCode
       }, {
@@ -108,6 +147,7 @@ module.exports = class extends Generator {
           requests: [{
             method: that.props.method,
             responseType: that.props.responseType,
+            contentType: that.props.contentType,
             response: that.props.response,
             statusCode: that.props.statusCode
           }]
@@ -131,10 +171,10 @@ module.exports = class extends Generator {
     );
 
     this.endpoint.urls.forEach(url => {
-      if (url.requests[0].responseType === 'json') {
+      if (url.requests[0].responseType === 'fileContent') {
         this.fs.copy(
-          this.templatePath('response.json'),
-          this.destinationPath('json-templates/' + url.requests[0].response)
+          this.templatePath(`response.${url.requests[0].contentType}`),
+          this.destinationPath('response-files/' + url.requests[0].response)
         );
       }
     });

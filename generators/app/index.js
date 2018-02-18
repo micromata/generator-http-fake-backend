@@ -54,10 +54,6 @@ module.exports = class extends Generator {
       }
     );
     this.fs.copy(
-      this.templatePath('eslintrc'),
-      this.destinationPath('.eslintrc')
-    );
-    this.fs.copy(
       this.templatePath('gitattributes'),
       this.destinationPath('.gitattributes')
     );
@@ -108,10 +104,10 @@ module.exports = class extends Generator {
       this.destinationPath('server.js')
     );
 
-    // JSON templates
+    // Directory for response files
     this.fs.copy(
-      this.templatePath('json-templates/gitkeep'),
-      this.destinationPath('json-templates/.gitkeep')
+      this.templatePath('response-files/gitkeep'),
+      this.destinationPath('response-files/.gitkeep')
     );
 
     // Server files

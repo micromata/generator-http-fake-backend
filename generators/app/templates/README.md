@@ -11,6 +11,8 @@
 
 > Build a fake backend by providing the content of JSON files or JavaScript objects through configurable routes.
 
+*It actually can serve the content of other file types as well as sending the files itself as response.*
+
 Comes as a Node.js server. Useful for mocking, testing and developing independent of the »real« backend.
 
 ## Example
@@ -28,7 +30,7 @@ It might take a few seconds longer as setting up the well-made [JSON Server](htt
 
 ## Requirements
 
-- Node.js (v4.0.0 or greater)
+- Node.js (v6.0.0 or greater)
 
 ## Install
 
@@ -36,9 +38,6 @@ It might take a few seconds longer as setting up the well-made [JSON Server](htt
 git clone https://github.com/micromata/http-fake-backend.git
 npm install
 ```
-
-*Hint: Use `yarn install` instead of `npm install` if you have installed [Yarn](https://yarnpkg.com/) … and yup, we have a lock file* :sparkling_heart:
-
 
 Or with help of [Yeoman](http://yeoman.io)
 
@@ -63,7 +62,7 @@ npm run start:dev
 ```
 
 This way the server uses `nodemon` to restart itself on changes. 
-This way you dont have to restart the server in case you changed an endpoint. 
+This way you don’t have to restart the server in case you changed an endpoint. 
 
 
 ### Later (eg. for tests in CI)
@@ -72,7 +71,7 @@ This way you dont have to restart the server in case you changed an endpoint.
 npm start
 ```
 
-Just fires up the server via node.  
+Just starts the server via node.  
 This one comes is without any magic (eg. `foreverjs`)
 
 ## Configuring endpoints
@@ -90,7 +89,7 @@ module.exports = SetupEndpoint({
     name: 'simpleExample',
     urls: [{
         requests: [
-            { response: '/json-templates/simpleExample.json' }
+            { response: '/response-files/simpleExample.json' }
         ]
     }]
 });
@@ -107,7 +106,7 @@ module.exports = SetupEndpoint({
         params: '/read',
         requests: [{
             method: 'GET',
-            response: '/json-templates/anotherExample.json'
+            response: '/response-files/anotherExample.json'
         }]
     }, {
         params: '/update/{id}',
@@ -121,6 +120,40 @@ module.exports = SetupEndpoint({
             response: {
                 deleted: true
             }
+        }]
+    }, ]
+});
+```
+
+#### Serving different content types
+
+`/server/api/fileTypes.js`:
+
+```js
+module.exports = SetupEndpoint({
+    name: 'fileTypes',
+    urls: [{
+        params: '/json',
+        requests: [{
+            response: '/response-files/simpleExample.json'
+        }]
+    }, {
+        params: '/text',
+        requests: [{
+            response: '/response-files/example.txt',
+            mimeType: 'text/plain'
+        }]
+    }, {
+        params: '/html',
+        requests: [{
+            response: '/response-files/example.html',
+            mimeType: 'text/html'
+        }]
+    }, {
+        params: '/pdf',
+        requests: [{
+            response: '/response-files/example.pdf',
+            sendFile: true
         }]
     }]
 });
@@ -140,6 +173,7 @@ module.exports = SetupEndpoint({
                 // Returns a 402 status code + error message provided by boom:
                 // {
                 //   "error" : "Payment Required",
+                //   "message" : "Payment Required",
                 //   "statusCode" : 402
                 // }
                 statusCode: 402
@@ -158,7 +192,7 @@ module.exports = SetupEndpoint({
             requests: [{
                 // Returns a 401 error provided by boom
                 // as defined on endpoint level
-                response: '/json-templates/anotherExample.json'
+                response: '/response-files/anotherExample.json'
             }]
         }
     ],
@@ -186,13 +220,19 @@ The configuration object in Detail:
     * `string`, or `array` of strings.
     * is used to define the http method(s) to which the endpoint will listen.
 * `urls.requests.response` 
-  * Could be a string pointing to a JSON template:
-    *   `response: '/json-templates/articles.json'`
+  * Could be a string pointing to a file:
+    *   `response: '/response-files/articles.json'`
   * Or just a JavaScript object:
     * `response: { success: true }`
+* `urls.requests.mimeType` 
+  * Optional (string). Defaults to `application/json`.
+  * Is used to set the `content-type` response header. 
+* `urls.requests.sendFile`
+  * Optional (boolean). Defaults to `false`.
+  * Sends the file as response instead of returning the file content.
 * `urls.requests.statusCode` 
-  * Optional
-  * A status code (number)
+  * Optional (boolean). Defaults to `200`
+  * The HTTP status code of the response.
   * Will return: 
     * a status code with a self defined response if you provide a response property
     * a status code with a predefined error object provided by [boom](https://github.com/hapijs/boom) if you dont provide a response property for that request.

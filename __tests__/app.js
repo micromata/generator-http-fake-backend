@@ -20,7 +20,6 @@ describe('generator-http-fake-backend → server', () => {
       assert.file([
         '.editorconfig',
         '.env',
-        '.eslintrc',
         '.gitattributes',
         '.gitignore'
       ]);
@@ -54,15 +53,18 @@ describe('generator-http-fake-backend → server', () => {
       ]);
     });
 
-    it('should create json-templates directory', () => {
+    it('should create response-files directory', () => {
       assert.file([
-        'json-templates/.gitkeep'
+        'response-files/.gitkeep'
       ]);
     });
 
     it('should create server files', () => {
       assert.file([
-        'server/api/setup/setup.js',
+        'server/api/setup/lib/getContentDisposition.js',
+        'server/api/setup/index.js',
+        'server/api/setup/supportedMethod.js',
+        'server/api/setup/unsupportedMethods.js',
         'server/web/index.js',
         'server/web/public/assets/css/styles.css',
         'server/web/public.js',
@@ -83,7 +85,11 @@ describe('generator-http-fake-backend → server', () => {
         'test/manifest.js',
         'test/server/api/endpoint.js',
         'test/server/api/fakeStatusCode.js',
+        'test/server/api/fileTypes.js',
+        'test/server/api/fixtures/example.pdf',
+        'test/server/api/fixtures/response.html',
         'test/server/api/fixtures/response.json',
+        'test/server/api/fixtures/response.txt',
         'test/server/web/index.js'
       ]);
     });
