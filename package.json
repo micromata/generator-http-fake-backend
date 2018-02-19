@@ -18,8 +18,8 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "prepublish": "nsp check",
     "security": "nsp check",
+    "prepublishOnly": "npm run security",
     "lint": "eslint . --fix",
     "pretest": "npm run lint",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
