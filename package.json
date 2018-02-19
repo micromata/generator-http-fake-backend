@@ -19,13 +19,14 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "prepublish": "nsp check",
+    "security": "nsp check",
     "lint": "eslint . --fix",
     "pretest": "npm run lint",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "release": "standard-version --tag-prefix",
-    "release:patch": "standard-version --tag-prefix --release-as patch",
-    "release:minor": "standard-version --tag-prefix --release-as minor",
-    "release:major": "standard-version --tag-prefix --release-as major"
+    "release": "npm run security && standard-version --tag-prefix",
+    "release:patch": "npm run security && standard-version --tag-prefix --release-as patch",
+    "release:minor": "npm run security && standard-version --tag-prefix --release-as minor",
+    "release:major": "npm run security && standard-version --tag-prefix --release-as major"
   },
   "keywords": [
     "fake",
