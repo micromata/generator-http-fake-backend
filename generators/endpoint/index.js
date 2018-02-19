@@ -127,7 +127,7 @@ module.exports = class extends Generator {
       }, {
         type: 'confirm',
         name: 'anotherUrl',
-        message: 'Want to enter another url (just hit enter for YES)?',
+        message: 'Should this endpoint have additional path params (just hit enter for YES)?',
         default: true
       }
     ];
