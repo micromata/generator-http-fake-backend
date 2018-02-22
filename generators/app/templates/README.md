@@ -60,7 +60,6 @@ npm run start:dev
 ```
 
 This way the server uses `nodemon` to restart itself on changes. 
-This way you don’t have to restart the server in case you changed an endpoint. 
 
 
 ### Later (eg. for tests in CI)
@@ -69,10 +68,9 @@ This way you don’t have to restart the server in case you changed an endpoint.
 npm start
 ```
 
-Just starts the server via node.  
-This one comes is without any magic (eg. `foreverjs`)
+Just starts the server via node.
 
-## Configuring endpoints
+## Configure endpoints
 
 Each endpoint needs a configuration file in `/server/api/` to define routes, http method and the response.
 
@@ -238,7 +236,7 @@ The configuration object in Detail:
   * Optional
   * Every subroute of this endpoint will return a HTTP error with the given status code provided by [boom](https://github.com/hapijs/boom).
 
-## Configuration
+## Configure server
 
 The main config is handled via a file named `.env` with the following content:
 
