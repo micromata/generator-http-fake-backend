@@ -255,6 +255,10 @@ TEST_PORT=9090
 # eg. http://localhost:8081/api/foo
 API_PREFIX=/api
 
+# Custom response header
+#CUSTOM_HEADER_NAME=Authorization
+#CUSTOM_HEADER_VALUE=Bearer eyJhbGciOiJIUzUxMiJ9
+
 ```
 
 

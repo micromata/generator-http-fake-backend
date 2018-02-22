@@ -15,4 +15,11 @@ helper.validateApiPrefix = function (value) {
   return returnValue;
 };
 
+helper.validateCustomHeader = function (value) {
+  if (value.trim() === '') {
+    return chalk.red('Can’t be an empty string.');
+  }
+  return true;
+};
+
 module.exports = helper;
