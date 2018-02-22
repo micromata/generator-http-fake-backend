@@ -1,10 +1,8 @@
 [![GitHub version](https://badge.fury.io/gh/micromata%2Fhttp-fake-backend.svg)](https://badge.fury.io/gh/micromata%2Fhttp-fake-backend)
 [![Build Status](https://travis-ci.org/micromata/http-fake-backend.svg?branch=master)](https://travis-ci.org/micromata/http-fake-backend)
-[![Code Climate](https://codeclimate.com/github/micromata/http-fake-backend/badges/gpa.svg)](https://codeclimate.com/github/micromata/http-fake-backend)
 [![Coverage Status](https://coveralls.io/repos/github/micromata/http-fake-backend/badge.svg?branch=master)](https://coveralls.io/github/micromata/http-fake-backend?branch=master)
 [![Dependency Status](https://david-dm.org/micromata/http-fake-backend.svg)](https://david-dm.org/micromata/http-fake-backend)
 [![devDependency Status](https://david-dm.org/micromata/http-fake-backend/dev-status.svg?theme=shields.io)](https://david-dm.org/micromata/http-fake-backend#info=devDependencies)
-[![Known Vulnerabilities](https://snyk.io/test/github/micromata/http-fake-backend/badge.svg)](https://snyk.io/test/github/micromata/http-fake-backend)
 [![Unicorn](https://img.shields.io/badge/unicorn-approved-ff69b4.svg?style=flat)](https://www.youtube.com/watch?v=qRC4Vk6kisY) 
 
 # http-fake-backend
