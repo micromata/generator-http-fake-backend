@@ -13,6 +13,6 @@ ratings:
   paths:
   - "**.js"
 exclude_paths:
-- test/
+- __tests__/
 - generators/app/templates/
 - generators/endpoint/templates/
