@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="4.1.0"></a>
+# [4.1.0](https://github.com/micromata/generator-http-fake-backend/compare/4.0.0...4.1.0) (2018-02-22)
+
+
+### Features
+
+* Add possibility to define custom response header ([2bd6abb](https://github.com/micromata/generator-http-fake-backend/commit/2bd6abb)), closes [micromata/http-fake-backend#10](https://github.com/micromata/http-fake-backend/issues/10)
+
+
+
 <a name="4.0.0"></a>
 # [4.0.0](https://github.com/micromata/generator-http-fake-backend/compare/v2.0.1...v4.0.0) (2018-02-19)
 
