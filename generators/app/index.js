@@ -29,6 +29,27 @@ module.exports = class extends Generator {
         default: '/api',
         store: true,
         validate: helper.validateApiPrefix
+      }, {
+        type: 'confirm',
+        name: 'customHeader',
+        message: 'Would you like to add a custom response header (e.g. Authorization)?',
+        default: false
+      }, {
+        type: 'input',
+        name: 'customHeaderName',
+        message: 'Custom header name:',
+        validate: helper.validateCustomHeader,
+        when(answers) {
+          return answers.customHeader;
+        }
+      }, {
+        type: 'input',
+        name: 'customHeaderValue',
+        message: 'Custom header value:',
+        validate: helper.validateCustomHeader,
+        when(answers) {
+          return answers.customHeader;
+        }
       }
     ];
 
@@ -50,7 +71,9 @@ module.exports = class extends Generator {
       this.templatePath('_env'),
       this.destinationPath('.env'), {
         serverPort: this.props.serverPort,
-        apiPrefix: this.props.apiPrefix
+        apiPrefix: this.props.apiPrefix,
+        customHeaderName: this.props.customHeaderName,
+        customHeaderValue: this.props.customHeaderValue
       }
     );
     this.fs.copy(

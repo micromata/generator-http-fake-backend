@@ -11,3 +11,7 @@ TEST_PORT=9090
 # URL Prefix for the endpoints
 # eg. http://localhost:8081/api/foo
 API_PREFIX=<%= apiPrefix %>
+
+# Custom response header
+CUSTOM_HEADER_NAME=<%= customHeaderName %>
+CUSTOM_HEADER_VALUE=<%= customHeaderValue %>

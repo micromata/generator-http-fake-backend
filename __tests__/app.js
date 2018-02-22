@@ -5,12 +5,15 @@ const helpers = require('yeoman-test');
 const helper = require('../generators/app/promptingHelpers');
 const chalk = require('chalk');
 
-describe('generator-http-fake-backend → server', () => {
+describe('generator-http-fake-backend → server with custom header', () => {
   beforeAll(done => {
     helpers.run(path.join(__dirname, '../generators/app'))
       .withPrompts({
         serverPort: 8081,
-        apiPrefix: '/api'
+        apiPrefix: '/api',
+        customHeader: true,
+        customHeaderName: 'HeaderName',
+        customHeaderValue: 'HeaderValue'
       })
       .on('end', done);
   });
@@ -31,6 +34,12 @@ describe('generator-http-fake-backend → server', () => {
       });
       it('should contain the prompted api url prefix', () => {
         assert.fileContent('.env', /API_PREFIX=\/api/);
+      });
+      it('should contain the prompted custom header name', () => {
+        assert.fileContent('.env', /CUSTOM_HEADER_NAME=HeaderName/);
+      });
+      it('should contain the prompted custom header value', () => {
+        assert.fileContent('.env', /CUSTOM_HEADER_VALUE=HeaderValue/);
       });
     });
 
@@ -62,6 +71,7 @@ describe('generator-http-fake-backend → server', () => {
     it('should create server files', () => {
       assert.file([
         'server/api/setup/lib/getContentDisposition.js',
+        'server/api/setup/lib/getCustomResponseHeader.js',
         'server/api/setup/index.js',
         'server/api/setup/supportedMethod.js',
         'server/api/setup/unsupportedMethods.js',
@@ -83,6 +93,7 @@ describe('generator-http-fake-backend → server', () => {
         'test/config.js',
         'test/index.js',
         'test/manifest.js',
+        'test/server/api/customResponseHeader.js',
         'test/server/api/endpoint.js',
         'test/server/api/fakeStatusCode.js',
         'test/server/api/fileTypes.js',
@@ -92,6 +103,27 @@ describe('generator-http-fake-backend → server', () => {
         'test/server/api/fixtures/response.txt',
         'test/server/web/index.js'
       ]);
+    });
+  });
+});
+
+describe('generator-http-fake-backend → server without custom header', () => {
+  beforeAll(done => {
+    helpers.run(path.join(__dirname, '../generators/app'))
+      .withPrompts({
+        serverPort: 8081,
+        apiPrefix: '/api',
+        customHeader: false
+      })
+      .on('end', done);
+  });
+
+  describe('.env', () => {
+    it('should contain the prompted custom header name', () => {
+      assert.fileContent('.env', /CUSTOM_HEADER_NAME=\n/);
+    });
+    it('should contain the prompted custom header value', () => {
+      assert.fileContent('.env', /CUSTOM_HEADER_VALUE=\n/);
     });
   });
 });
@@ -106,6 +138,18 @@ describe('generator-http-fake-backend → server → prompting helpers', () => {
     });
     it('should fail when missing a leading slash', () => {
       assert.equal(helper.validateApiPrefix('api'), chalk.red('API prefix has to begin with a `/`.'));
+    });
+  });
+
+  describe('→ validateCustomHeader()', () => {
+    it('should accept a non empty string', () => {
+      assert.equal(helper.validateCustomHeader('x-powered-by'), true);
+    });
+    it('should fail with a empty string', () => {
+      assert.equal(helper.validateCustomHeader(''), chalk.red('Can’t be an empty string.'));
+    });
+    it('should fail with a empty string', () => {
+      assert.equal(helper.validateCustomHeader('   '), chalk.red('Can’t be an empty string.'));
     });
   });
 });
