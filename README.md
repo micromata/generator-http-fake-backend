@@ -1,3 +1,7 @@
+## Sorry, this project is unmaintained 😢
+Thanks to all contributors for your work!
+
+
 [![npm version](https://badge.fury.io/js/generator-http-fake-backend.svg)](http://badge.fury.io/js/generator-http-fake-backend)
 [![Build Status](https://travis-ci.org/micromata/generator-http-fake-backend.svg?branch=master)](https://travis-ci.org/micromata/generator-http-fake-backend)
 [![Coverage Status](https://coveralls.io/repos/github/micromata/generator-http-fake-backend/badge.svg?branch=master)](https://coveralls.io/github/micromata/generator-http-fake-backend?branch=master)
